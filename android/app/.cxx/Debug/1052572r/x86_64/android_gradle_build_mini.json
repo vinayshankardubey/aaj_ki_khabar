@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "C:\\Vinay\\sdk\\flutter\\packages\\flutter_tools\\gradle\\src\\main\\groovy\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\vinay\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Vinay\\flutter\\mightynews_v4.1.0\\Wordpress App\\flutter source code\\mightynews\\android\\app\\.cxx\\Debug\\1052572r\\x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\vinay\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Vinay\\flutter\\mightynews_v4.1.0\\Wordpress App\\flutter source code\\mightynews\\android\\app\\.cxx\\Debug\\1052572r\\x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

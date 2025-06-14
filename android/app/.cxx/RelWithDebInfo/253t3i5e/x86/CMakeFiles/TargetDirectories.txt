@@ -1,0 +1,2 @@
+C:/Vinay/flutter/mightynews_v4.1.0/Wordpress App/flutter source code/mightynews/android/app/.cxx/RelWithDebInfo/253t3i5e/x86/CMakeFiles/edit_cache.dir
+C:/Vinay/flutter/mightynews_v4.1.0/Wordpress App/flutter source code/mightynews/android/app/.cxx/RelWithDebInfo/253t3i5e/x86/CMakeFiles/rebuild_cache.dir
