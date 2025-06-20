@@ -1,4 +1,4 @@
-# mighty_news
+# Aaj Ki khabar
 
 A new Flutter project.
 
