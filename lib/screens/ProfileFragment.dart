@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mighty_news/screens/home_screen.dart';
-import 'package:mighty_news/screens/privacy_policy_screen.dart';
-import 'package:mighty_news/screens/terms_and_condition.dart';
+import 'package:aaj_ki_khabar/screens/privacy_policy_screen.dart';
+import 'package:aaj_ki_khabar/screens/terms_and_condition.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';

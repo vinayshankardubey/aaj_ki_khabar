@@ -12,7 +12,7 @@
     <application
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="aajkiKhabar"
+        android:label="Aaj Ki Khabar"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
@@ -40,8 +40,6 @@
             android:value="2" />
 
         <meta-data android:name="com.onesignal.suppressLaunchURLs" android:value="true" />
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
     </application>
 </manifest>

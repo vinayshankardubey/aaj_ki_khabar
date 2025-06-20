@@ -1,6 +1,5 @@
 import 'package:facebook_audience_network/ad/ad_banner.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../components/NewsItemWidget.dart';
 import '../models/DashboardResponse.dart';
 import '../screens/NewsDetailScreen.dart';
@@ -44,26 +43,6 @@ class NewsListWidgetState extends State<NewsListWidget> {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  height: 50,
-                  width: context.width(),
-                  child: getStringAsync(banner) == admob
-                      ? AdWidget(
-                    ad: BannerAd(
-                      adUnitId: getBannerAdUnitId()!,
-                      size: AdSize.banner,
-                      request: AdRequest(),
-                      listener: BannerAdListener(),
-                    )..load(),
-                  )
-                      : FacebookBannerAd(
-                    placementId: faceBookBannerPlacementId, //testid
-                    bannerSize: BannerSize.STANDARD,
-                    listener: (result, value) {
-                      print("Banner Ad: $result -->  $value");
-                    },
-                  ),
-                ),
                 NewsItemWidget(
                   item,
                   onTap: () {

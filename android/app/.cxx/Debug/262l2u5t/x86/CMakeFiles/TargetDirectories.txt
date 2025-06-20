@@ -1,0 +1,2 @@
+C:/Vinay/flutter/Aaj_Ki_Khabar/Wordpress App/flutter source code/aaj_ki_khabar/android/app/.cxx/Debug/262l2u5t/x86/CMakeFiles/edit_cache.dir
+C:/Vinay/flutter/Aaj_Ki_Khabar/Wordpress App/flutter source code/aaj_ki_khabar/android/app/.cxx/Debug/262l2u5t/x86/CMakeFiles/rebuild_cache.dir

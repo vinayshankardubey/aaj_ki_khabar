@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:mighty_news/network/api/api_servies.dart';
-import 'package:mighty_news/provider/home_provider.dart';
-import 'package:mighty_news/widget/custom_shimmer_container.dart';
-import 'package:mighty_news/widget/news_item_details_widget.dart';
-import 'package:mighty_news/widget/trending_news_widget.dart';
+import 'package:aaj_ki_khabar/provider/home_provider.dart';
+import 'package:aaj_ki_khabar/widget/custom_shimmer_container.dart';
+import 'package:aaj_ki_khabar/widget/news_item_details_widget.dart';
+import 'package:aaj_ki_khabar/widget/trending_news_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../utils/Colors.dart';
 import '../widget/news_item_widget.dart';

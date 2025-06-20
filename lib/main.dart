@@ -5,8 +5,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:mighty_news/provider/home_provider.dart';
+import 'package:aaj_ki_khabar/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../AppLocalizations.dart';
 import '../../../AppTheme.dart';
@@ -24,8 +23,6 @@ import 'models/LanguageModel.dart';
 import 'models/WeatherResponse.dart';
 
 AppStore appStore = AppStore();
-AppOpenAd? openAd;
-late AppLifecycleReactor appLifecycleReactor;
 
 int mAdShowCount = 0;
 
@@ -46,15 +43,14 @@ int retryCount = 0;
 AppLocalizations? appLocale;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+   await WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
   defaultRadius = 10;
   defaultAppButtonRadius = 30;
   defaultBlurRadius = 4.0;
   defaultLoaderAccentColorGlobal = colorPrimary;
 
   await initialize(defaultDialogBorderRadius: 10);
-  MobileAds.instance.initialize();
   appStore.setLanguage(getStringAsync(LANGUAGE, defaultValue: defaultLanguage));
   appStore.setNotification(getBoolAsync(IS_NOTIFICATION_ON, defaultValue: true));
   appStore.setTTSLanguage(getStringAsync(TEXT_TO_SPEECH_LANG, defaultValue: defaultTTSLanguage));
@@ -73,25 +69,19 @@ void main() async {
   ttsLang = ttsLanguage.firstWhere((element) => element.fullLanguageCode == getStringAsync(TEXT_TO_SPEECH_LANG, defaultValue: defaultTTSLanguage));
 
   if (isMobile) {
-    await Firebase.initializeApp();
 
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     OneSignal.Debug.setAlertLevel(OSLogLevel.none);
     OneSignal.consentRequired(false);
-
     OneSignal.initialize(mOneSignalAPPKey);
     OneSignal.User.pushSubscription.optIn();
     OneSignal.Notifications.permission;
     // await OneSignal.shared.setAppId(mOneSignalAPPKey);
     // OneSignal.shared.consentGranted(true);
     // OneSignal.shared.promptUserForPushNotificationPermission();
-
     // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
   }
-  if (isEnableAds && isOpenAdEnable) {
-    AppOpenAdManager appOpenAdManager = AppOpenAdManager()..loadAds();
-    appLifecycleReactor = AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
-  }
+
   setOrientationPortrait();
   runApp(MyApp());
 }
@@ -123,62 +113,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AppLifecycleReactor {
-  final AppOpenAdManager appOpenAdManager;
 
-  AppLifecycleReactor({required this.appOpenAdManager});
-
-  void listenToAppStateChanges() {
-    AppStateEventNotifier.startListening();
-    AppStateEventNotifier.appStateStream.forEach((state) => _onAppStateChanged(state));
-  }
-
-  void _onAppStateChanged(AppState appState) {
-    if (appState == AppState.foreground ) {
-      appOpenAdManager.showAds();
-    }
-  }
-}
-
-class AppOpenAdManager {
-  Future<void> loadAds() async {
-    await AppOpenAd.load(
-        adUnitId: getOpenAppAdUnitId()!,
-        request: const AdRequest(),
-        adLoadCallback: AppOpenAdLoadCallback(
-          onAdLoaded: (ad) async {
-            print('ad is loaded');
-            openAd = ad;
-            await showAds();
-          },
-          onAdFailedToLoad: (error) {
-            print('ad failed to load $error');
-          },
-        ),
-        orientation: AppOpenAd.orientationPortrait
-    );
-  }
-
-  Future<void> showAds() async {
-    openAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (ad) {
-        print('onAdShowedFullScreenContent');
-        openAd!.show();
-      },
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        print('onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        openAd = null;
-      },
-      onAdDismissedFullScreenContent: (ad) {
-        LiveStream liveStream = new LiveStream();
-        liveStream.emit("openAdsClose", "");
-        print('onAdDismissedFullScreenContent');
-        ad.dispose();
-        openAd = null;
-      },
-    );
-    openAd!.show();
-    openAd = null;
-  }
-}

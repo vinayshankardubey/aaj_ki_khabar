@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mighty_news/screens/home_screen.dart';
+import 'package:aaj_ki_khabar/screens/home_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';
@@ -25,7 +25,7 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> init() async {
-    await 2100.milliseconds.delay;
+    await 3.seconds.delay;
     // redirect();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardScreen()));
   }
@@ -99,10 +99,6 @@ class SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // @override
-  // void setState(fn) {
-  //   if (mounted) super.setState(fn);
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -97,9 +97,7 @@ class ChooseTopicScreenState extends State<ChooseTopicScreen> {
                     if (getStringAsync(reward) == facebookAudience) {
                       FacebookRewardedVideoAd.showRewardedVideoAd();
                     } else {
-                      showAdMobRewardedAd(onCall: () {
-                        save();
-                      });
+
                     }
                   } else {
                     save();

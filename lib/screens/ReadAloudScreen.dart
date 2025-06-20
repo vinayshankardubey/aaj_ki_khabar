@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../components/ReadAloudDialog.dart';
 import '../../../utils/extension.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -14,7 +13,6 @@ class ReadAloudScreen extends StatefulWidget {
 }
 
 class _ReadAloudScreenState extends State<ReadAloudScreen> {
-  RewardedAd? rewardedAd;
 
   @override
   void initState() {
@@ -23,9 +21,7 @@ class _ReadAloudScreenState extends State<ReadAloudScreen> {
   }
 
   void init() async {
-    if (adEnableOnPlay && isEnableAds) {
-      showAdMobRewardedAd();
-    }
+
     setDynamicStatusBarColorDetail(milliseconds: 400);
   }
 
@@ -34,49 +30,7 @@ class _ReadAloudScreenState extends State<ReadAloudScreen> {
     if (mounted) super.setState(fn);
   }
 
-  void adMobRewardedAd() {
-    RewardedAd.load(
-        adUnitId: getRewardAdUnitId()!,
-        request: AdRequest(),
-        rewardedAdLoadCallback: RewardedAdLoadCallback(
-          onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
-            rewardedAd = ad;
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
-            rewardedAd = null;
-            adMobRewardedAd();
-          },
-        ));
-  }
 
-  void showAdMobRewardedAd() {
-    if (rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
-      return;
-    }
-    rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) => print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (RewardedAd ad) {
-        toast('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
-        // adMobRewardedAd();
-      },
-      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        toast('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        adMobRewardedAd();
-      },
-    );
-
-    rewardedAd!.setImmersiveMode(true);
-
-    rewardedAd!.show(onUserEarnedReward: ( AdWithoutView ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
-    });
-    rewardedAd = null;
-  }
 
   @override
   Widget build(BuildContext context) {

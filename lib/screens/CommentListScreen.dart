@@ -1,7 +1,6 @@
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import '../AppLocalizations.dart';
 import '../components/AdmobComponent.dart';
@@ -26,7 +25,6 @@ class CommentListScreen extends StatefulWidget {
 }
 
 class CommentListScreenState extends State<CommentListScreen> {
-  RewardedAd? rewardedAd;
 
   @override
   void initState() {
@@ -54,7 +52,6 @@ class CommentListScreenState extends State<CommentListScreen> {
     if (getStringAsync(interstitial) == facebookAudience) {
       loadFaceBookInterstitialAd();
     } else {
-      loadInterstitialAd();
     }
     showAd();
   }
@@ -68,7 +65,6 @@ class CommentListScreenState extends State<CommentListScreen> {
   @override
   void dispose() async {
     if (isInterstitialAdsEnable == true && isEnableAds==true)
-    myInterstitial!.dispose();
     super.dispose();
   }
 
@@ -87,7 +83,6 @@ class CommentListScreenState extends State<CommentListScreen> {
     if (getStringAsync(interstitial) == facebookAudience) {
       showFacebookInterstitialAd();
     } else {
-      showInterstitialAd();
     }
   }
 
@@ -145,14 +140,6 @@ class CommentListScreenState extends State<CommentListScreen> {
                       if (getStringAsync(reward) == facebookAudience) {
                         FacebookRewardedVideoAd.showRewardedVideoAd();
                       } else {
-                        showAdMobRewardedAd(onCall: () async {
-                          if (appStore.isLoggedIn) {
-                            bool? res = await showInDialog(context, builder: (context) => PostCommentDialog(widget.id));
-                            if (res ?? false) {
-                              setState(() {});
-                            }
-                          } else {}
-                        });
                       }
                     } else {
                       LoginScreen(isNewTask: false).launch(context);
@@ -227,25 +214,6 @@ class CommentListScreenState extends State<CommentListScreen> {
               Loader().visible(appStore.isLoading),
             ],
           ),
-          bottomNavigationBar: isBannerAdsEnable == true && isEnableAds==true?Container(
-            height: 50,
-            child: getStringAsync(banner) == admob
-                ? AdWidget(
-                    ad: BannerAd(
-                      adUnitId:getBannerAdUnitId()!,
-                      size: AdSize.banner,
-                      request: AdRequest(),
-                      listener: BannerAdListener(),
-                    )..load(),
-                  )
-                : FacebookBannerAd(
-                    placementId: faceBookBannerPlacementId, //testid
-                    bannerSize: BannerSize.STANDARD,
-                    listener: (result, value) {
-                      print("Banner Ad: $result -->  $value");
-                    },
-                  ),
-          ):Text("hello"),
         ),
       ),
     );

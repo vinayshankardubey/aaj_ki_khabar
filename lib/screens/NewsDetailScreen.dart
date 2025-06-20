@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../components/AdmobComponent.dart';
 import '../../../components/DetailPageVariant1Widget.dart';
@@ -33,7 +32,6 @@ class NewsDetailScreen extends StatefulWidget {
 }
 
 class NewsDetailScreenState extends State<NewsDetailScreen> {
-  InterstitialAd? myInterstitial;
   Timer? timer;
 
   bool isBookmark = false;
@@ -77,7 +75,6 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
         if (getStringAsync(reward) == facebookAudience) {
           loadRewardAd();
         } else {
-          adMobRewardedAd();
         }
       }
     }
@@ -108,7 +105,6 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
     if (getStringAsync(interstitial) == facebookAudience) {
       loadFaceBookInterstitialAd();
     } else {
-      loadInterstitialAd();
     }
   }
 
@@ -136,45 +132,11 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
       if (getStringAsync(interstitial) == facebookAudience) {
         showFacebookInterstitialAd();
       } else {
-        showInterstitialAd();
       }
     });
   }
 
-  Future<void> loadInterstitialAd() async {
-    InterstitialAd.load(
-      adUnitId: getInterstitialAdUnitId()!,
-      request: AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
-          myInterstitial = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          myInterstitial = null;
-        },
-      ),
-    );
-  }
 
-  Future<void> showInterstitialAd() async {
-    if (myInterstitial == null) {
-      print('Warning: attempt to show interstitial before loaded.');
-      return;
-    }
-    myInterstitial!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) => print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        ad.dispose();
-        //loadInterstitialAd();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        ad.dispose();
-        // loadInterstitialAd();
-      },
-    );
-    myInterstitial!.show();
-    myInterstitial = null;
-  }
 
   @override
   void dispose() async {
@@ -276,17 +238,7 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
                             }
                             // });
                           } else {
-                            showAdMobRewardedAd(onCall: () async {
-                              if (!appStore.isLoggedIn) {
-                                bool? res = await LoginScreen(isNewTask: false).launch(context);
 
-                                if (res ?? false) {
-                                  addToWishList();
-                                }
-                              } else {
-                                addToWishList();
-                              }
-                            });
                           }
                         } else {
                           if (!appStore.isLoggedIn) {
@@ -321,9 +273,7 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
                               Share.share(widget.newsData!.share_url.validate());
                             }
                           } else {
-                            showAdMobRewardedAd(onCall: () {
-                              Share.share(widget.newsData!.share_url.validate());
-                            });
+
                           }
                         } else {
                           Share.share(widget.newsData!.share_url.validate());
@@ -349,9 +299,7 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
                             ReadAloudScreen(parseHtmlString(postContent)).launch(context);
                           }
                         } else {
-                          showAdMobRewardedAd(onCall: () {
-                            ReadAloudScreen(parseHtmlString(postContent)).launch(context);
-                          });
+
                         }
                       } else {
                         ReadAloudScreen(parseHtmlString(postContent)).launch(context);
@@ -368,36 +316,6 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
                 child: Stack(
                   children: [
                     getVariant(widget.newsData!.post_view.validate(), widget.newsData!.related_news.validate()),
-                    Positioned(
-                      child: isBannerAdsEnable == true && isEnableAds == true
-                          ? Container(
-                              height: 50,
-                              width: context.width(),
-                              child: getStringAsync(banner) == admob
-                                  ? AdWidget(
-                                      ad: BannerAd(
-                                        adUnitId: getBannerAdUnitId()!,
-                                        size: AdSize.banner,
-                                        request: AdRequest(),
-                                        listener: BannerAdListener(onAdLoaded: (e) {
-                                          log("load---" + e.toString());
-                                        }, onAdFailedToLoad: (_, e) {
-                                          log("fail to load---" + e.toString());
-                                        }),
-                                      )..load(),
-                                    )
-                                  : FacebookBannerAd(
-                                      placementId: faceBookBannerPlacementId, //testid
-                                      bannerSize: BannerSize.STANDARD,
-                                      listener: (result, value) {
-                                        print("Banner Ad: $result -->  $value");
-                                      },
-                                    ),
-                            )
-                          : SizedBox(),
-                      bottom: 0,
-                      width: context.width(),
-                    ),
                   ],
                 ),
               )

@@ -1,26 +1,18 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:mighty_news/screens/home_screen.dart';
+import 'package:aaj_ki_khabar/screens/home_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../AppLocalizations.dart';
 import '../../../components/AppWidgets.dart';
 import '../../../main.dart';
-import '../screens/ChooseTopicScreen.dart';
-import '../screens/HomeFragment.dart';
 import '../screens/LoginScreen.dart';
 import '../screens/NewsDetailScreen.dart';
 import '../screens/ProfileFragment.dart';
 import '../../../utils/extension.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
-
-import 'CategoryFragment.dart';
-import 'SearchNewsFragment.dart';
-import 'SuggestedForYouFragment.dart';
 import 'category_screen.dart';
 
 class DashboardScreen extends StatefulWidget {

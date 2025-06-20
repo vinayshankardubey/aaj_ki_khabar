@@ -80,20 +80,7 @@ class DetailPageVariant3WidgetState extends State<DetailPageVariant3Widget> {
 
   loadRewardAd() {
     loadFaceBookRewardedVideoAd(onCall: () async {
-      if (isPlay == true) {
-        showAdMobRewardedAd(onCall: () {
-          showInDialog(
-            context,
-            builder: (context) => ReadAloudDialog(parseHtmlString(widget.postContent)),
-            contentPadding: EdgeInsets.zero,
-            barrierDismissible: false,
-          );
-        });
-      } else if (isShare == true) {
-        Share.share(widget.newsData!.share_url.validate());
-      } else {
-        mBookmark();
-      }
+
     });
   }
 
@@ -212,9 +199,7 @@ class DetailPageVariant3WidgetState extends State<DetailPageVariant3Widget> {
                                       mBookmark();
                                     }
                                   } else {
-                                    showAdMobRewardedAd(onCall: () async {
-                                      mBookmark();
-                                    });
+
                                   }
                                 } else {
                                   mBookmark();
@@ -240,9 +225,7 @@ class DetailPageVariant3WidgetState extends State<DetailPageVariant3Widget> {
                                       Share.share(widget.newsData!.share_url.validate());
                                     }
                                   } else {
-                                    showAdMobRewardedAd(onCall: () {
-                                      Share.share(widget.newsData!.share_url.validate());
-                                    });
+
                                   }
                                 } else {
                                   Share.share(widget.newsData!.share_url.validate());
@@ -265,24 +248,10 @@ class DetailPageVariant3WidgetState extends State<DetailPageVariant3Widget> {
                                     if (isRewardedAdLoaded == true) {
                                       FacebookRewardedVideoAd.showRewardedVideoAd();
                                     } else {
-                                      showAdMobRewardedAd(onCall: () {
-                                        showInDialog(
-                                          context,
-                                          builder: (context) => ReadAloudDialog(parseHtmlString(widget.postContent)),
-                                          contentPadding: EdgeInsets.zero,
-                                          barrierDismissible: false,
-                                        );
-                                      });
+
                                     }
                                   } else {
-                                    showAdMobRewardedAd(onCall: () {
-                                      showInDialog(
-                                        context,
-                                        builder: (context) => ReadAloudDialog(parseHtmlString(widget.postContent)),
-                                        contentPadding: EdgeInsets.zero,
-                                        barrierDismissible: false,
-                                      );
-                                    });
+
                                   }
                                 } else {
                                   showInDialog(

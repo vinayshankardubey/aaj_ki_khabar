@@ -296,18 +296,6 @@ class DetailPageVariant2WidgetState extends State<DetailPageVariant2Widget> {
                                 addToWishList();
                               }
                             }
-                          } else {
-                            showAdMobRewardedAd(onCall: () async {
-                              if (!appStore.isLoggedIn) {
-                                bool? res = await LoginScreen(isNewTask: false).launch(context);
-
-                                if (res ?? false) {
-                                  addToWishList();
-                                }
-                              } else {
-                                addToWishList();
-                              }
-                            });
                           }
                         } else {
                           if (!appStore.isLoggedIn) {
@@ -341,9 +329,7 @@ class DetailPageVariant2WidgetState extends State<DetailPageVariant2Widget> {
                               Share.share(widget.newsData!.share_url.validate());
                             }
                           } else {
-                            showAdMobRewardedAd(onCall: () {
-                              Share.share(widget.newsData!.share_url.validate());
-                            });
+
                           }
                         } else {
                           Share.share(widget.newsData!.share_url.validate());
@@ -369,9 +355,7 @@ class DetailPageVariant2WidgetState extends State<DetailPageVariant2Widget> {
                               ReadAloudScreen(parseHtmlString(widget.postContent)).launch(context);
                             }
                           } else {
-                            showAdMobRewardedAd(onCall: () {
-                              ReadAloudScreen(parseHtmlString(widget.postContent)).launch(context);
-                            });
+
                           }
                         } else {
                           ReadAloudScreen(parseHtmlString(widget.postContent)).launch(context);
