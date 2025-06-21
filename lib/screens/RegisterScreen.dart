@@ -141,7 +141,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                       errorThisFieldRequired: appLocalization.translate('field_Required'),
                       errorInvalidEmail: appLocalization.translate('email_Validation'),
                       maxLines: 1,
-                      cursorColor: colorPrimary,
+                      cursorColor: AppColors.redColor,
                     ).paddingBottom(16),
                     AppTextField(
                       controller: passwordController,
@@ -170,7 +170,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                     30.height,
                     AppButton(
                       text: appLocalization.translate('signUp'),
-                      color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                      color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.greenColor,
                       textStyle: boldTextStyle(color: white),
                       onTap: () {
                         signUp();
@@ -181,7 +181,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                     AppButton(
                       text: appLocalization.translate('login'),
                       textStyle: boldTextStyle(color: textPrimaryColorGlobal),
-                      color: appStore.isDarkMode ? scaffoldSecondaryDark : white,
+                      color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : white,
                       onTap: () {
                         finish(context);
                       },

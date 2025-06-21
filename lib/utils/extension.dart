@@ -1,6 +1,6 @@
 export "AdConfigurationConstants.dart";
 export 'AdMobUtils.dart';
-export 'Colors.dart';
+export 'app_colors.dart';
 export 'Common.dart';
 export 'Constants.dart';
 export 'ListViewStateBuilder.dart';

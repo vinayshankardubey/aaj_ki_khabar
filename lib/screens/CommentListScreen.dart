@@ -171,7 +171,7 @@ class CommentListScreenState extends State<CommentListScreen> {
                               child: Container(
                                 height: context.height(),
                                 width: context.width() * 0.30,
-                                color: appStore.isDarkMode ? Theme.of(context).cardColor : colorPrimary,
+                                color: appStore.isDarkMode ? Theme.of(context).cardColor : AppColors.whiteColor,
                                 child: Icon(Icons.delete, color: white).onTap(() {}),
                               ),
                             ),

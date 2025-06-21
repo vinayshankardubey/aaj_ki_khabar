@@ -1,10 +1,12 @@
 import 'package:nb_utils/nb_utils.dart';
 
-const mAppName = 'Aaj Ki Khabar';
+const mAppName = 'Live Uttarakhand';
 
 //region URLs & Keys
 /// Note: /wp-json/ is required after your domain. Ex if your domain is www.abc.com then ${mBaseUrl} will be  https://www.abc.com/wp-json/
-const mBaseUrl = 'https://aajkikhabar.com/wp-json/wp/v2/';
+
+const appUrl = "https://liveuttarakhand.com/";
+const mBaseUrl = 'https://liveuttarakhand.com/wp-json/wp/v2/';
 
 const supportURL = 'https://support.meetmighty.com/';
 const codeCanyonURL = 'https://codecanyon.net/item/mightynews-flutter-news-app-with-wordpress-backend/29648579?s_rank=3';

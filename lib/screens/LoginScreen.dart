@@ -158,7 +158,7 @@ class LoginScreenState extends State<LoginScreen> {
                     AppButton(
                       text: appLocalization.translate('login'),
                       textStyle: boldTextStyle(color: white),
-                      color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                      color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.greenColor,
                       onTap: () {
                         signIn();
                       },
@@ -168,7 +168,7 @@ class LoginScreenState extends State<LoginScreen> {
                     AppButton(
                       text: appLocalization.translate('signUp'),
                       textStyle: boldTextStyle(color: textPrimaryColorGlobal),
-                      color: appStore.isDarkMode ? scaffoldSecondaryDark : white,
+                      color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : white,
                       width: context.width(),
                       onTap: () {
                         hideKeyboard(context);

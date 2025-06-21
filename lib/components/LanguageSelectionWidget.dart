@@ -20,7 +20,7 @@ class LanguageSelectionWidget extends StatelessWidget {
       },
       trailing: DropdownButton(
         items: languages.map((e) => DropdownMenuItem<Language>(child: Text(e.name, style: primaryTextStyle(size: 14)), value: e)).toList(),
-        dropdownColor: appStore.isDarkMode ? scaffoldSecondaryDark : Colors.white,
+        dropdownColor: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : Colors.white,
         value: language,
         underline: SizedBox(),
         onChanged: (Language? v) async {

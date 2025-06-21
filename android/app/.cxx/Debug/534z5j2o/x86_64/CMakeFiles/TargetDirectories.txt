@@ -1,0 +1,2 @@
+C:/Vinay/flutter/Live Uttarakhand/live_uttarakhand/android/app/.cxx/Debug/534z5j2o/x86_64/CMakeFiles/edit_cache.dir
+C:/Vinay/flutter/Live Uttarakhand/live_uttarakhand/android/app/.cxx/Debug/534z5j2o/x86_64/CMakeFiles/rebuild_cache.dir

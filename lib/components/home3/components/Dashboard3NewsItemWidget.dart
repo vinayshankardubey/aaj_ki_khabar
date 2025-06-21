@@ -40,7 +40,7 @@ class Dashboard3NewsItemWidgetState extends State<Dashboard3NewsItemWidget> {
     return Container(
       margin: EdgeInsets.all(8),
       decoration: boxDecorationWithRoundedCorners(
-        backgroundColor: appStore.isDarkMode ? scaffoldColorDark : white,
+        backgroundColor: appStore.isDarkMode ? AppColors.scaffoldColorDark : white,
         borderRadius: radius(),
         boxShadow: defaultBoxShadow(blurRadius: 100.0),
       ),

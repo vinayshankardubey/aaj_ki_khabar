@@ -75,7 +75,7 @@ class DashBoard2TwitterFeedListWidgetState extends State<DashBoard2TwitterFeedLi
             mainAxisSize: MainAxisSize.min,
             children: [
               16.height,
-              ViewAllHeadingWidget(title: appLocale!.translate('our_twitter_handle'), backgroundColor: white, textColor: scaffoldColorDark),
+              ViewAllHeadingWidget(title: appLocale!.translate('our_twitter_handle'), backgroundColor: white, textColor: AppColors.scaffoldColorDark),
               8.height,
               Container(
                 height: 200,

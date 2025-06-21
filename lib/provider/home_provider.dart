@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:live_uttarakhand/utils/app_images.dart';
 
 import '../network/api/api_servies.dart';
 
@@ -11,13 +12,13 @@ class HomeProvider extends ChangeNotifier{
   List<dynamic> _postsData = [];
   List<dynamic> _otherStateData = [];
   List<dynamic> _allCategoryData = [];
-  List<dynamic> _singleCategoryData = [];
+  List<dynamic> singleCategoryData = [];
   List<dynamic> _internationalData = [];
   List<dynamic> _topOfTheWeekData = [];
 
   List<dynamic> get postsData => _postsData;
   List<dynamic> get categoryData => _allCategoryData;
-  List<dynamic> get singleCategoryData => _singleCategoryData;
+
   List<dynamic> get otherStateData => _otherStateData;
   List<dynamic> get internationalData => _internationalData;
   List<dynamic> get topOfTheWeekData => _topOfTheWeekData;
@@ -25,11 +26,27 @@ class HomeProvider extends ChangeNotifier{
   bool get isLoading => _isLoading;
   bool get postLoading => _postLoading;
 
+  List<String> categoryImageList = [
+    AppImages.crimeImg,
+    AppImages.friendshipDayImg,
+    AppImages.iansImg,
+    AppImages.independenceDayImg,
+    AppImages.ipl2021Img,
+    AppImages.jobImg,
+    AppImages.kargilVijayDiwasImg,
+    AppImages.mainSlideImg,
+    AppImages.mansoonSessionImg,
+    AppImages.rakshabandhanImg,
+
+  ];
+
   set isLoading(bool value){
     _isLoading = value;
     notifyListeners();
   }
-
+  void update(){
+    notifyListeners();
+  }
 
 
   Future<void> fetchPostsData({
@@ -41,7 +58,7 @@ class HomeProvider extends ChangeNotifier{
      if(categoryId == null){
        _postsData = await ApiServices.fetchPostData(page: page, perPage: perPage);
      }else{
-       _singleCategoryData = await ApiServices.fetchPostData(page: 1, perPage: 10,categoryId: categoryId);
+       singleCategoryData = await ApiServices.fetchPostData(page: 1, perPage: 10,categoryId: categoryId);
      }
     _postLoading = false;
     notifyListeners();
@@ -55,13 +72,15 @@ class HomeProvider extends ChangeNotifier{
     _isLoading = false;
     notifyListeners();
   }
+
   Future<void> fetchOtherStateData()async{
     _isLoading = true;
      notifyListeners();
-    _otherStateData = await ApiServices.fetchCategoryData(page: 1, perPage: 10,categoryId: _allCategoryData[_allCategoryData.length - 1]["id"]);
+    _otherStateData = await ApiServices.fetchCategoryData(page: 1, perPage: 10,categoryId: _allCategoryData[0]["id"]);
     _isLoading = false;
     notifyListeners();
   }
+
   Future<void> fetchTopOfTheWeekData()async{
     _isLoading = true;
     notifyListeners();
@@ -69,6 +88,7 @@ class HomeProvider extends ChangeNotifier{
     _isLoading = false;
     notifyListeners();
   }
+
   Future<void> fetchInternationalData()async{
     _isLoading = true;
     notifyListeners();

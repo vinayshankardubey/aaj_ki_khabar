@@ -27,7 +27,7 @@ class _StoryListScreenState extends State<StoryListScreen> {
   }
 
   Future<void> init() async {
-    setDynamicStatusBarColor(milliseconds: 400, color: scaffoldColorDark);
+    setDynamicStatusBarColor(milliseconds: 400, color: AppColors.scaffoldColorDark);
   }
 
   @override

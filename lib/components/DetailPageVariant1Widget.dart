@@ -74,7 +74,7 @@ class _DetailPageVariant1WidgetState extends State<DetailPageVariant1Widget> {
             if (widget.newsData!.category.validate().isNotEmpty)
               Text(
                 widget.newsData!.category!.first.name.validate().toUpperCase(),
-                style: boldTextStyle(size: 12, color: colorPrimary, letterSpacing: 1.2),
+                style: boldTextStyle(size: 12, color: AppColors.redColor, letterSpacing: 1.2),
               ).paddingSymmetric(horizontal: 16),
             16.height,
             Text(
@@ -177,7 +177,7 @@ class _DetailPageVariant1WidgetState extends State<DetailPageVariant1Widget> {
             ).visible(widget.newsData!.post_author_name.validate().isNotEmpty).paddingSymmetric(horizontal: 16),
             AppButton(
               text: appLocalization.translate('view_Comments'),
-              color: colorPrimary,
+              color: AppColors.redColor,
               textStyle: boldTextStyle(color: white),
               onTap: () async {
                 print("Detail Page Varien tTime view Comments");
@@ -196,7 +196,7 @@ class _DetailPageVariant1WidgetState extends State<DetailPageVariant1Widget> {
                 Container(
                   padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
                   margin: EdgeInsets.only(left: 16, top: 32, bottom: 8),
-                  decoration: BoxDecoration(color: colorPrimary, borderRadius: radius(defaultRadius)),
+                  decoration: BoxDecoration(color: AppColors.redColor, borderRadius: radius(defaultRadius)),
                   child: Text(appLocalization.translate('related_news'), style: boldTextStyle(size: 12, color: Colors.white, letterSpacing: 1.5)),
                 ),
                 BreakingNewsListWidget(widget.relatedNews.validate()),

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:facebook_audience_network/ad/ad_rewarded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -12,12 +11,10 @@ import '../../../screens/LoginScreen.dart';
 import '../../../utils/extension.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../AppLocalizations.dart';
-import 'AdmobComponent.dart';
 import 'AppWidgets.dart';
 import 'BreakingNewsListWidget.dart';
 import 'CommentTextWidget.dart';
 import 'FacebookComponent.dart';
-import 'HtmlWidget.dart';
 import 'ReadAloudDialog.dart';
 
 // ignore: must_be_immutable
@@ -312,7 +309,7 @@ class DetailPageVariant3WidgetState extends State<DetailPageVariant3Widget> {
                     30.height,
                     AppButton(
                       text: appLocalization.translate('view_Comments'),
-                      color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                      color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.redColor,
                       textStyle: boldTextStyle(color: white),
                       onTap: () async {
                         await CommentListScreen(widget.newsData!.iD).launch(context);
@@ -328,7 +325,7 @@ class DetailPageVariant3WidgetState extends State<DetailPageVariant3Widget> {
                         Container(
                           padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
                           margin: EdgeInsets.only(left: 16, top: 32, bottom: 8),
-                          decoration: BoxDecoration(color: colorPrimary, borderRadius: radius(defaultRadius)),
+                          decoration: BoxDecoration(color: AppColors.redColor, borderRadius: radius(defaultRadius)),
                           child: Text(appLocalization.translate('related_news'), style: boldTextStyle(size: 12, color: Colors.white, letterSpacing: 1.5)),
                         ),
                         BreakingNewsListWidget(widget.relatedNews.validate()),

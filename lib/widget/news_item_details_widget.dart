@@ -1,12 +1,10 @@
-import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../utils/Colors.dart';
+import '../utils/app_colors.dart';
 import '../utils/Common.dart' as HtmlConversion;
+import '../utils/app_images.dart';
 
 class NewsItemDetailsWidget extends StatefulWidget {
   final int index;
@@ -39,15 +37,13 @@ class _NewsItemDetailsWidgetState extends State<NewsItemDetailsWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: AppColors.whiteColor,
+
         toolbarHeight: 64,
-        title: Image.asset(
-          "assets/images/app_image.png",
-          fit: BoxFit.contain,
-          height: 50,
+        title:  Image.asset(AppImages.appLogo,
+          fit: BoxFit.fitHeight,
+          width: 180,
         ),
-        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -92,7 +88,7 @@ class _NewsItemDetailsWidgetState extends State<NewsItemDetailsWidget> {
                            const SizedBox(width: 20),
                            Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date']))),
                            const SizedBox(width: 10),
-                           Text("by ${post["yoast_head_json"]['author']}", style: TextStyle(fontWeight: FontWeight.w500)),
+                           // Text("by ${post["yoast_head_json"]['author']}", style: TextStyle(fontWeight: FontWeight.w500)),
 
                            const Spacer(),
 
@@ -100,8 +96,8 @@ class _NewsItemDetailsWidgetState extends State<NewsItemDetailsWidget> {
                              padding: EdgeInsets.symmetric(horizontal: 10),
                              child: Icon(Icons.messenger_outline, color: Colors.red, size: 20),
                            ),
-                           Text(
-                             post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
+                           Text("",
+                             // post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
                              style: TextStyle(
                                fontWeight: FontWeight.w500,
                                color: Colors.red,
@@ -171,7 +167,7 @@ class _NewsItemDetailsWidgetState extends State<NewsItemDetailsWidget> {
                   icon:  Row(
                     children: [
                       Icon(Icons.arrow_back_ios),
-                      Text("Previous",style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.w600,color: colorPrimary),)
+                      Text("Previous",style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.w600,),)
                     ],
                   ),
                 ),
@@ -183,7 +179,7 @@ class _NewsItemDetailsWidgetState extends State<NewsItemDetailsWidget> {
                   },
                   icon:  Row(
                     children: [
-                       Text("Next",style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.w600,color: colorPrimary),),
+                       Text("Next",style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.w600,),),
                        Icon(Icons.arrow_forward_ios),
 
                     ],

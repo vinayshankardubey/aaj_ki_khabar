@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:aaj_ki_khabar/screens/home_screen.dart';
+import 'package:live_uttarakhand/screens/home_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../AppLocalizations.dart';
 import '../../../components/AppWidgets.dart';
@@ -137,12 +137,13 @@ class DashboardScreenState extends State<DashboardScreen> {
           ),
           bottomNavigationBar: Observer(
             builder: (_) => BottomNavigationBar(
+              backgroundColor: AppColors.backgroundColor,
               currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(AntDesign.home, color: context.theme.iconTheme.color),
                   label: 'Home',
-                  activeIcon: Icon(AntDesign.home, color: colorPrimary),
+                  activeIcon: Icon(AntDesign.home, color: AppColors.redColor),
                 ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(Icons.dashboard_outlined, color: context.theme.iconTheme.color),
@@ -152,7 +153,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.category_outlined, color: context.theme.iconTheme.color),
                   label: 'Category',
-                  activeIcon: Icon(Icons.category_outlined, color: colorPrimary),
+                  activeIcon: Icon(Icons.category_outlined, color: AppColors.redColor),
                 ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(Ionicons.ios_search, color: context.theme.iconTheme.color),
@@ -166,14 +167,14 @@ class DashboardScreenState extends State<DashboardScreen> {
                   label: 'Profile',
                   activeIcon: appStore.isLoggedIn
                       ? Container(
-                          decoration: BoxDecoration(border: Border.all(color: colorPrimary), shape: BoxShape.circle),
+                          decoration: BoxDecoration(border: Border.all(color: AppColors.grayColor), shape: BoxShape.circle),
                           child: cachedImage(
                             appStore.userProfileImage,
                             height: 24,
                             width: 24,
                             fit: BoxFit.cover,
                           ).cornerRadiusWithClipRRect(15))
-                      : Icon(MaterialIcons.person_outline, color: colorPrimary),
+                      : Icon(MaterialIcons.person_outline, color: AppColors.redColor),
                 ),
               ],
               type: BottomNavigationBarType.fixed,

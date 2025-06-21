@@ -67,6 +67,8 @@ class ApiServices{
     int? categoryId ,
   }) async{
     try{
+
+      print(" other state data ${mBaseUrl}posts?_embed&per_page=$perPage${categoryId!=null?'&categories=$categoryId':''}");
       final response = await http.get(
           Uri.parse('${mBaseUrl}posts?_embed&per_page=$perPage${categoryId!=null?'&categories=$categoryId':''}'));
       if (response.statusCode == 200) {

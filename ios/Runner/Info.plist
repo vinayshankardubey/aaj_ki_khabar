@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Aaj Ki Khabar</string>
+	<string>Live Uttarakhand</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Aaj Ki Khabar</string>
+	<string>Live Uttarakhand</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -43,15 +43,15 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Aaj Ki Khabar app requires access to the Camera to upload your profile photo.</string>
+	<string>Live Uttarakhand app requires access to the Camera to upload your profile photo.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Aaj Ki Khabar app requires location permission access to get the current location of the user to get whether information. </string>
+	<string>Live Uttarakhand app requires location permission access to get the current location of the user to get whether information. </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Aaj Ki Khabar app requires location permission access to get the current location of the user to get whether information. </string>
+	<string>Live Uttarakhand app requires location permission access to get the current location of the user to get whether information. </string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Aaj Ki Khabar app requires access to the photo library to upload your profile photo.</string>
+	<string>Live Uttarakhand app requires access to the photo library to upload your profile photo.</string>
 	<key>Privacy-Location Usage Description</key>
-	<string>Aaj Ki Khabar app requires location permission access to get the current location of the user to get whether information. </string>
+	<string>Live Uttarakhand app requires location permission access to get the current location of the user to get whether information. </string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

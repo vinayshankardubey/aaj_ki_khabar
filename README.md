@@ -1,4 +1,4 @@
-# mighty_news
+# Live Uttrakhand
 
 A new Flutter project.
 

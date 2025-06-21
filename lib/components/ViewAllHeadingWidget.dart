@@ -20,7 +20,7 @@ class ViewAllHeadingWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
           margin: EdgeInsets.only(left: 16),
-          decoration: BoxDecoration(color: backgroundColor ?? colorPrimary, borderRadius: radius(defaultRadius)),
+          decoration: BoxDecoration(color: backgroundColor ?? AppColors.redColor, borderRadius: radius(defaultRadius)),
           child: Text(title.validate(), style: boldTextStyle(size: 12, color: textColor ?? Colors.white, letterSpacing: 1.5)),
         ),
         Container(

@@ -8,10 +8,10 @@ import '../../../main.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../screens/DashboardScreen.dart';
-import 'Colors.dart';
+import 'app_colors.dart';
 import 'Constants.dart';
 
-Color getAppPrimaryColor() => appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary;
+Color getAppPrimaryColor() => appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
 
 String? titleFont() {
   return GoogleFonts.cormorantGaramond().fontFamily;
@@ -30,7 +30,7 @@ Future<void> launchUrls(String url, {bool forceWebView = false}) async {
 
 InputDecoration inputDecoration(BuildContext context, {String? hint, Widget? prefixIcon}) {
   return InputDecoration(
-    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorPrimary)),
+    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.greenColor)),
     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: viewLineColor)),
     labelText: hint,
     labelStyle: TextStyle(color: Theme.of(context).textTheme.titleLarge!.color),
@@ -51,7 +51,7 @@ String? removeLastCharacter(String? str, {int length = 1}) {
 Widget titleWidget(String title) {
   return Row(
     children: [
-      VerticalDivider(color: colorPrimary, thickness: 4).withHeight(10),
+      VerticalDivider(color: AppColors.grayColor, thickness: 4).withHeight(10),
       8.width,
       Text(title, style: boldTextStyle(size: 12, color: textSecondaryColorGlobal)),
     ],
@@ -101,11 +101,11 @@ double getDashBoard2WidgetHeight() {
 
 Color getAppBarWidgetBackGroundColor() {
   if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 1) {
-    return appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary;
+    return appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
   } else if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 2 || getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 3) {
-    return appStore.isDarkMode ? scaffoldSecondaryDark : white;
+    return appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
   } else {
-    return appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary;
+    return appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
   }
 }
 
@@ -131,14 +131,14 @@ Future<void> setDynamicStatusBarColor({Color? color, int milliseconds = 100}) as
   if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 1) {
     setStatusBarColor(color ?? getAppPrimaryColor() /*, statusBarIconBrightness: Brightness.light*/, delayInMilliSeconds: milliseconds);
   } else if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 2 || getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 3) {
-    setStatusBarColor(color ?? (appStore.isDarkMode ? scaffoldSecondaryDark : white) /*, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark*/,
+    setStatusBarColor(color ?? (appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : white) /*, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark*/,
         delayInMilliSeconds: milliseconds);
   }
 }
 
 Future<void> setDynamicStatusBarColorDetail({int milliseconds = 100}) async {
   if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) != 1 && getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 1) {
-    setStatusBarColor(appStore.isDarkMode ? scaffoldSecondaryDark : Colors.white /*, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark*/,
+    setStatusBarColor(appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : Colors.white /*, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark*/,
         delayInMilliSeconds: milliseconds);
   } else {
     if (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 2 || getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 3) {

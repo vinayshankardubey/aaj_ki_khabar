@@ -41,7 +41,7 @@ class CategoryItemWidgetState extends State<CategoryItemWidget> {
           ).cornerRadiusWithClipRRect(defaultRadius),
           AnimatedContainer(
             duration: Duration(milliseconds: 400),
-            color: appStore.myTopics.contains(widget.data.catId) && widget.onTap == null ? colorPrimary.withOpacity(0.5) : Colors.black45,
+            color: appStore.myTopics.contains(widget.data.catId) && widget.onTap == null ? AppColors.redColor.withOpacity(0.5) : Colors.black45,
           ).cornerRadiusWithClipRRect(defaultRadius),
           Row(
             mainAxisSize: MainAxisSize.min,

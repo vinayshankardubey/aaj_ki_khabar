@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/Colors.dart';
+import '../utils/app_colors.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({Key? key}) : super(key: key);
@@ -9,11 +9,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorPrimary,
-        iconTheme: IconThemeData(color: Colors.white),
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: AppColors.whiteColor,
         toolbarHeight: 64,
-        title: Text("Privacy Policy",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500),),
-        centerTitle: true,
+        title: Text("Privacy Policy",style: TextStyle(fontWeight: FontWeight.w500),),
 
       ),
       body: SingleChildScrollView(
@@ -23,10 +22,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
           children: const [
             SectionTitle('Privacy Policy'),
             SectionText(
-              'This Privacy Policy governs the manner in which aajkikhabar.com collects, uses, '
+              'This Privacy Policy governs the manner in which liveuttarakhand.com collects, uses, '
                   'maintains and discloses information collected from users (each, a User) of the '
-                  'aajkikhabar.com website (Site). This privacy policy applies to the Site, all products '
-                  'and services offered by aajkikhabar.com.',
+                  'liveuttarakhand.com website (Site). This privacy policy applies to the Site, all products '
+                  'and services offered by liveuttarakhand.com.',
             ),
             SectionTitle('Personal Identification Information'),
             SectionText(
@@ -49,7 +48,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             ),
             SectionTitle('How We Use Collected Information?'),
             SectionText(
-              'aajkikhabar.com collects and uses Users personal information for the following purposes:\n'
+              'liveuttarakhand.com collects and uses Users personal information for the following purposes:\n'
                   '– To improve our Site\n'
                   '– To improve customer service',
             ),
@@ -69,7 +68,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             ),
             SectionTitle('Changes To This Privacy Policy'),
             SectionText(
-              'aajkikhabar.com has the discretion to update this privacy policy at any time. '
+              'liveuttarakhand.com has the discretion to update this privacy policy at any time. '
                   'We encourage Users to frequently check this page for any changes.',
             ),
             SectionTitle('Your Acceptance Of These Terms'),
@@ -79,7 +78,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             SectionTitle('Your Consent'),
             SectionText('By using our site, you consent to our privacy policy.'),
             SectionTitle('Contacting Us'),
-            SectionText('If you have any questions, contact us at info@aajkikhbar.com.'),
+            SectionText('If you have any questions, contact us at @liveuttarakhand.com'),
           ],
         ),
       ),
@@ -97,7 +96,7 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
       child: Text(
         text,
-        style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: colorPrimary),
+        style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: AppColors.redColor),
       ),
     );
   }

@@ -158,7 +158,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       30.height,
                       AppButton(
                         text: appLocalization.translate('save'),
-                        color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                        color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.greenColor,
                         textStyle: boldTextStyle(color: white),
                         onTap: () {
                           

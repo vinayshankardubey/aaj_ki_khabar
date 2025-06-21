@@ -68,7 +68,7 @@ class ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
           30.height,
           AppButton(
             text: appLocalization.translate('submit'),
-            color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+            color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.redColor,
             textStyle: boldTextStyle(color: white),
             onTap: () {
               submit(appLocalization);

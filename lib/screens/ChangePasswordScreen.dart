@@ -129,7 +129,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         },
                         text: appLocalization.translate('save'),
                         width: context.width(),
-                        color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                        color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor,
                         textStyle: boldTextStyle(color: white),
                       ),
                     ],

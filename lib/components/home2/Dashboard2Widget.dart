@@ -54,7 +54,7 @@ class Dashboard2WidgetState extends State<Dashboard2Widget> {
             StoryListWidget(
               list: widget.snap.data!.story_post,
               backgroundColor: white,
-              textColor: scaffoldColorDark,
+              textColor: AppColors.scaffoldColorDark,
             ),
 
             Column(
@@ -65,7 +65,7 @@ class Dashboard2WidgetState extends State<Dashboard2Widget> {
                 ViewAllHeadingWidget(
                   title: appLocalization.translate('breaking_News').toUpperCase(),
                   backgroundColor: white,
-                  textColor: scaffoldColorDark,
+                  textColor: AppColors.scaffoldColorDark,
                   onTap: () {
                     ViewAllNewsScreen(title: 'breaking_News', req: {'posts_per_page': postsPerPage, FILTER: FILTER_FEATURE}).launch(context);
                   },
@@ -86,7 +86,7 @@ class Dashboard2WidgetState extends State<Dashboard2Widget> {
                 ViewAllHeadingWidget(
                   title: appLocalization.translate('recent_News').toUpperCase(),
                   backgroundColor: white,
-                  textColor: scaffoldColorDark,
+                  textColor: AppColors.scaffoldColorDark,
                   onTap: () {
                     ViewAllNewsScreen(title: 'recent_News', req: {'posts_per_page': postsPerPage}).launch(context);
                   },
@@ -104,7 +104,7 @@ class Dashboard2WidgetState extends State<Dashboard2Widget> {
                 ViewAllHeadingWidget(
                   title: appLocalization.translate('videos').toUpperCase(),
                   backgroundColor: white,
-                  textColor: scaffoldColorDark,
+                  textColor: AppColors.scaffoldColorDark,
                   onTap: () {
                     ViewAllVideoScreen().launch(context);
                   },

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/home_provider.dart';
-import '../utils/Colors.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_images.dart';
 import 'category_details_view_screen.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -27,14 +28,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
-          backgroundColor: colorPrimary,
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: AppColors.whiteColor,
           toolbarHeight: 64,
-          title: Image.asset("assets/images/app_image.png",
+          title: Image.asset(AppImages.appLogo,
             fit: BoxFit.fitHeight,
-            height: 50,
+            width: 180,
           ),
-          centerTitle: true,
+
           actions: [
             IconButton(
                 onPressed: () {
@@ -56,7 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Visibility(
                         visible: isVisible,
                         child: Container(
-                          color: colorPrimary,
+                          color: AppColors.whiteColor,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10.0),
@@ -79,7 +82,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       fillColor: Colors.white,
                                       hintText: "Search",
                                       suffixIcon: Icon(
-                                        Icons.search, color: colorPrimary,),
+                                        Icons.search, color: AppColors.greenColor,),
                                       border: OutlineInputBorder(
                                           borderSide: BorderSide.none
                                       )
@@ -95,49 +98,94 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           padding: const EdgeInsets.all(10.0),
                           child: homeProvider.filterList.isNotEmpty
                               ? GridView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: homeProvider.filterList.length,
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, // 2 columns
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                                childAspectRatio: 1.5,
-                              ),
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () async {
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: homeProvider.filterList.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              childAspectRatio: 1.2,
+                            ),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  homeProvider.singleCategoryData = [];
+                                  homeProvider.update();
 
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            CategoryDetailsViewScreen(categoryId: homeProvider.filterList[index]["id"],)));
-                                  },
-                                  child: Card(
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            16)),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        color: Colors.blueGrey.shade50,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          homeProvider
-                                              .filterList[index]["name"],
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              color: colorPrimary),
-                                        ),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CategoryDetailsViewScreen(
+                                        categoryId: homeProvider.filterList[index]["id"],
                                       ),
                                     ),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 8,
+                                        offset: Offset(0, 4),
+                                      )
+                                    ],
                                   ),
-                                );
-                              })
+                                  child: Stack(
+                                    children: [
+                                      // Background Image
+                                      Positioned.fill(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: Image.asset(
+                                            homeProvider.categoryImageList[index],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Dark overlay
+                                      Positioned.fill(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.black.withOpacity(0.25),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Centered Title Text
+                                      Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: Text(
+                                            homeProvider.filterList[index]["name"],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                              shadows: [
+                                                Shadow(
+                                                  color: Colors.black45,
+                                                  offset: Offset(0, 1),
+                                                  blurRadius: 2,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+
                               : Text("Category not found", style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500,

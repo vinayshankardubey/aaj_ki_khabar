@@ -32,7 +32,7 @@ class DashBoard2NewsItemWidgetState extends State<DashBoard2NewsItemWidget> {
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.only(right: 6),
         decoration: BoxDecoration(
-          color: appStore.isDarkMode ? scaffoldColorDark : white,
+          color: appStore.isDarkMode ? AppColors.scaffoldColorDark : white,
           borderRadius: radius(),
           boxShadow: [BoxShadow(color: gray.withOpacity(0.4), blurRadius: 3.0, spreadRadius: 0.0)],
         ),

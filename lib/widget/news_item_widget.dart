@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:live_uttarakhand/utils/app_images.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../utils/Colors.dart';
 import '../utils/html_coversion.dart';
 
 class NewsItemWidget extends StatefulWidget {
@@ -61,7 +57,10 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
               ),
             ),
             errorWidget: (context, url, error) =>
-            const Icon(Icons.error),
+             Padding(
+               padding: const EdgeInsets.symmetric(horizontal: 20),
+               child: Image.asset(AppImages.appLogo),
+             ),
           )
         ),
 
@@ -120,17 +119,17 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
             SizedBox(width: 10.0,),
             Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? ""),
             SizedBox(width: 10.0,),
-            Text("by ${post["yoast_head_json"]['author']}", style: TextStyle(fontWeight: FontWeight.w500)),
+            Text("by ", style: TextStyle(fontWeight: FontWeight.w500)),
             Spacer(),
-            Icon(Icons.messenger_outline, color: colorPrimary, size: 20),
+            Icon(Icons.messenger_outline, size: 20),
             SizedBox(width: 5.0,),
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
+              child: Text( "",
+                // post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  color: colorPrimary,
+
                 ),
               ),
             ),

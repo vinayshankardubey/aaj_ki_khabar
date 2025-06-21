@@ -122,7 +122,7 @@ class _QuickReadScreenState extends State<QuickReadScreen> {
                               Text(e.human_time_diff.validate(), style: secondaryTextStyle()),
                               8.height,
                               Text(parseHtmlString(e.post_content.validate()), style: primaryTextStyle()).expand(),
-                              Text('Read more', style: boldTextStyle(color: colorPrimary)).paddingAll(8),
+                              Text('Read more', style: boldTextStyle(color: AppColors.greenColor)).paddingAll(8),
                             ],
                           ).paddingSymmetric(horizontal: 16).expand(),
                         ],

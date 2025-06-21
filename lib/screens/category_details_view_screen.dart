@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/home_provider.dart';
-import '../utils/Colors.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_images.dart';
 import '../widget/custom_shimmer_container.dart';
 import '../widget/news_item_details_widget.dart';
 import '../widget/news_item_widget.dart';
@@ -33,16 +34,15 @@ class _CategoryDetailsViewScreenState extends State<CategoryDetailsViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: colorPrimary,
+          backgroundColor: AppColors.whiteColor,
+          surfaceTintColor: Colors.transparent,
           toolbarHeight: 64,
-          iconTheme: IconThemeData(
-            color: Colors.white
-          ),
-          title: Image.asset("assets/images/app_image.png",
+
+          title: Image.asset(AppImages.appLogo,
             fit: BoxFit.fitHeight,
-            height: 50,
+            width: 180,
           ),
-          centerTitle: true,
+
         ),
 
         body: SingleChildScrollView(
@@ -139,10 +139,10 @@ class _CategoryDetailsViewScreenState extends State<CategoryDetailsViewScreen> {
 
                       ],)
                    :
-                    homeProvider.singleCategoryData.isEmpty && homeProvider.postLoading == false
+                    homeProvider.postLoading == false && homeProvider.singleCategoryData.isEmpty
                       ? SizedBox(
                       height: MediaQuery.of(context).size.height/1.3,
-                      child: Center(child: Text("No News Found",textAlign: TextAlign.center,)))
+                      child: Center(child: Text("No News Found",textAlign: TextAlign.center,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)))
                         : ListView.builder(
                       itemCount: 3,
                       shrinkWrap: true,

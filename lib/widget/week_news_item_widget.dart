@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../utils/Colors.dart';
+import '../utils/app_colors.dart';
 import '../utils/Common.dart' as HtmlConversion;
 
 class WeekNewsItemWidget extends StatelessWidget {
@@ -90,7 +90,7 @@ class WeekNewsItemWidget extends StatelessWidget {
                     SizedBox(width: 10.0),
                     Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? "", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
                     SizedBox(width: 10.0),
-                    Text("by ${post["yoast_head_json"]['author']}", style: TextStyle(fontWeight: FontWeight.w500)),
+                    Text("by ", style: TextStyle(fontWeight: FontWeight.w500)),
                     Spacer(),
                   ],
                 ),

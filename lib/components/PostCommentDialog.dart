@@ -79,7 +79,7 @@ class PostCommentDialogState extends State<PostCommentDialog> {
                 submit();
               },
               text: appLocalization.translate('post'),
-              color: colorPrimary,
+              color: AppColors.redColor,
               textStyle: boldTextStyle(color: white),
             ).visible(!appStore.isLoading, defaultWidget: Loader().center().visible(appStore.isLoading))
           ],

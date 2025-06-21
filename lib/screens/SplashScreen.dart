@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:aaj_ki_khabar/screens/home_screen.dart';
+import 'package:live_uttarakhand/utils/app_images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';
@@ -103,11 +103,14 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appStore.isDarkMode ? scaffoldSecondaryDark : Colors.white,
+      backgroundColor: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : Colors.white,
       body: SizedBox(
         height: context.height(),
         width: context.width(),
-        child: Image.asset("assets/images/splash_img.jpg",height: 60,)
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Center(child: Image.asset(AppImages.appLogo,height: 60,)),
+        )
       ),
     );
   }

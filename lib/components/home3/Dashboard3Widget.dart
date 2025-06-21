@@ -52,7 +52,7 @@ class Dashboard3WidgetState extends State<Dashboard3Widget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BreakingNewsMarqueeWidget(data: widget.snap.data!.breaking_post),
-            StoryListWidget(list: widget.snap.data!.story_post, backgroundColor: white, textColor: scaffoldColorDark),
+            StoryListWidget(list: widget.snap.data!.story_post, backgroundColor: white, textColor: AppColors.scaffoldColorDark),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -61,7 +61,7 @@ class Dashboard3WidgetState extends State<Dashboard3Widget> {
                 ViewAllHeadingWidget(
                   title: appLocalization.translate('breaking_News').toUpperCase(),
                   backgroundColor: white,
-                  textColor: scaffoldColorDark,
+                  textColor: AppColors.scaffoldColorDark,
                   onTap: () {
                     ViewAllNewsScreen(title: 'breaking_News', req: {'posts_per_page': postsPerPage, FILTER: FILTER_FEATURE}).launch(context);
                   },
@@ -79,7 +79,7 @@ class Dashboard3WidgetState extends State<Dashboard3Widget> {
                 16.height,
                 ViewAllHeadingWidget(
                   title: appLocalization.translate('recent_News').toUpperCase(),
-                  textColor: scaffoldColorDark,
+                  textColor: AppColors.scaffoldColorDark,
                   backgroundColor: white,
                   onTap: () {
                     ViewAllNewsScreen(title: 'recent_News', req: {'posts_per_page': postsPerPage}).launch(context);
@@ -97,7 +97,7 @@ class Dashboard3WidgetState extends State<Dashboard3Widget> {
                 ViewAllHeadingWidget(
                   title: appLocalization.translate('videos').toUpperCase(),
                   backgroundColor: white,
-                  textColor: scaffoldColorDark,
+                  textColor: AppColors.scaffoldColorDark,
                   onTap: () {
                     ViewAllVideoScreen().launch(context);
                   },
@@ -108,7 +108,7 @@ class Dashboard3WidgetState extends State<Dashboard3Widget> {
             ).visible(widget.snap.data!.videos.validate().isNotEmpty),
             16.height,
             //Show Twitter Widget only if you have not disabled in your Word-Press Admin panel
-            TwitterFeedListWidget(backgroundColor: white, textColor: scaffoldColorDark),
+            TwitterFeedListWidget(backgroundColor: white, textColor: AppColors.scaffoldColorDark),
           ],
         ),
       ),

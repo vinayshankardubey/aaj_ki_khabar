@@ -100,9 +100,9 @@ class SubCategoryScreenState extends State<SubCategoryScreen> {
                     return Container(
                       padding: EdgeInsets.only(left: 16, right: 16),
                       margin: EdgeInsets.only(left: 12, right: 12, bottom: 8),
-                      decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(), backgroundColor: data.catId == categoryId ? colorPrimary : context.cardColor,blurRadius: 1),
+                      decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(), backgroundColor: data.catId == categoryId ? AppColors.redColor : context.cardColor,blurRadius: 1),
                       alignment: Alignment.center,
-                      child: Text(data.name.validate(), style: boldTextStyle(color: data.catId == categoryId ? Colors.white : colorPrimary)),
+                      child: Text(data.name.validate(), style: boldTextStyle(color: data.catId == categoryId ? Colors.white : AppColors.redColor)),
                     ).onTap(() {
                       categoryId = data.catId;
                       appStore.setLoading(true);

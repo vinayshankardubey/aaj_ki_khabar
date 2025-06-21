@@ -173,7 +173,7 @@ class OTPDialogState extends State<OTPDialog> {
                           sendOTP(appLocale);
                         },
                         text: appLocale.translate('send_otp'),
-                        color: appStore.isDarkMode ? colorPrimary.withOpacity(0.7) : colorPrimary,
+                        color: appStore.isDarkMode ? AppColors.redColor.withOpacity(0.7) : AppColors.redColor,
                         textStyle: boldTextStyle(color: white),
                         width: context.width(),
                       ),
@@ -215,7 +215,7 @@ class OTPDialogState extends State<OTPDialog> {
                           submit(appLocale);
                         },
                         text: appLocale.translate('confirm'),
-                        color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                        color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.redColor,
                         textStyle: boldTextStyle(color: white),
                         width: context.width(),
                       ),

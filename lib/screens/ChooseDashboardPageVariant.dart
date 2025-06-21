@@ -103,7 +103,7 @@ class ChooseDashboardPageVariantState extends State<ChooseDashboardPageVariant> 
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(
-          color: getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == code ? colorPrimary : Theme.of(context).dividerColor,
+          color: getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == code ? AppColors.whiteColor : Theme.of(context).dividerColor,
         ),
       ),
       child: Stack(
@@ -130,7 +130,7 @@ class ChooseDashboardPageVariantState extends State<ChooseDashboardPageVariant> 
             child: AnimatedContainer(
               duration: Duration(milliseconds: 800),
               padding: EdgeInsets.all(4),
-              child: Icon(Icons.check, size: 18, color: colorPrimary),
+              child: Icon(Icons.check, size: 18, color: AppColors.whiteColor),
               decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: defaultBoxShadow()),
             ).visible(getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == code),
           ),

@@ -83,7 +83,7 @@ class ChooseDetailPageVariantScreenState extends State<ChooseDetailPageVariantSc
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(
-          color: getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == code ? colorPrimary : Theme.of(context).dividerColor,
+          color: getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == code ? AppColors.grayColor : Theme.of(context).dividerColor,
         ),
       ),
       child: Stack(
@@ -110,7 +110,7 @@ class ChooseDetailPageVariantScreenState extends State<ChooseDetailPageVariantSc
             child: AnimatedContainer(
               duration: Duration(milliseconds: 800),
               padding: EdgeInsets.all(4),
-              child: Icon(Icons.check, size: 18, color: colorPrimary),
+              child: Icon(Icons.check, size: 18, color: AppColors.redColor),
               decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: defaultBoxShadow()),
             ).visible(getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == code),
           ),

@@ -32,7 +32,7 @@ class WalkThroughScreenState extends State<WalkThroughScreen> {
         image: 'assets/walk_1.png',
         title: 'Subscribe for updates',
         subTitle: 'Mighty News offers an awesome category filter option which will let you access what you are interested in straight away!',
-        color: colorPrimary,
+        color: AppColors.whiteColor,
       ),
     );
     list.add(

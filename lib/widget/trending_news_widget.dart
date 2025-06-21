@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../utils/Colors.dart';
+import '../utils/app_colors.dart';
 import '../utils/Common.dart' as HtmlConversion;
 
 class TrendingNewsWidget extends StatefulWidget {
@@ -61,6 +61,14 @@ class _TrendingNewsWidgetState extends State<TrendingNewsWidget> {
               ),
             )
         ),
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: AppColors.blackColor.withOpacity(.3)
+            )
+          ),
+        ),
         Positioned(
           top: 20,
           right: 20,
@@ -111,15 +119,15 @@ class _TrendingNewsWidgetState extends State<TrendingNewsWidget> {
               SizedBox(width: 10.0,),
               Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? "",style: TextStyle(color: Colors.white)),
               SizedBox(width: 10.0,),
-              Text("by ${post["yoast_head_json"]['author']}",
+              Text("by ",
                   style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white)),
               Spacer(),
               Icon(Icons.messenger_outline, color: Colors.white, size: 20),
               SizedBox(width: 5.0,),
               Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
-                child: Text(
-                  post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
+                child: Text("",
+                  // post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.white,

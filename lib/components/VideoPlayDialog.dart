@@ -25,7 +25,7 @@ class VideoPlayDialogState extends State<VideoPlayDialog> {
   Future<void> init() async {
     await Future.delayed(Duration(milliseconds: 200));
 
-    setStatusBarColor(scaffoldSecondaryDark, statusBarIconBrightness: Brightness.light);
+    setStatusBarColor(AppColors.scaffoldSecondaryDark, statusBarIconBrightness: Brightness.light);
   }
 
   @override

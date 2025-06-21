@@ -37,7 +37,7 @@ class StoryListWidget extends StatelessWidget {
                   height: h,
                   width: h,
                   decoration: BoxDecoration(
-                    border: Border.all(color: colorPrimary, width: 1),
+                    border: Border.all(color: AppColors.redColor, width: 1),
                     borderRadius: radius(50),
                   ),
                   child: cachedImage(e.image, fit: BoxFit.cover).cornerRadiusWithClipRRect(50),

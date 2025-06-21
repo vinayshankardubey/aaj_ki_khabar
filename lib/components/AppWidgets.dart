@@ -73,7 +73,7 @@ Widget getPostCategoryTagWidget(BuildContext context, NewsData newsData) {
               return Container(
                 padding: EdgeInsets.only(right: 8, top: 4, bottom: 4, left: 8),
                 margin: EdgeInsets.only(right: 8),
-                decoration: BoxDecoration(color: colorPrimary, borderRadius: radius()),
+                decoration: BoxDecoration(color: AppColors.redColor, borderRadius: radius()),
                 child: Row(
                   children: [
                     //if (e.image.validate().isNotEmpty) cachedImage(e.image, height: 20, width: 20, fit: BoxFit.cover).cornerRadiusWithClipRRect(defaultRadius).paddingSymmetric(horizontal: 8),

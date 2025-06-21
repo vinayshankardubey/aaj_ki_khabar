@@ -1,24 +1,21 @@
 import 'package:async/async.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:aaj_ki_khabar/provider/home_provider.dart';
+import 'package:live_uttarakhand/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../AppLocalizations.dart';
 import '../../../AppTheme.dart';
 import '../../../models/FontSizeModel.dart';
 import '../../../screens/SplashScreen.dart';
 import '../../../store/AppStore.dart';
-import '../../../utils/AdConfigurationConstants.dart';
-import '../../../utils/AdMobUtils.dart';
-import '../../../utils/Colors.dart';
+import '../../../utils/app_colors.dart';
 import '../../../utils/Constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
 import 'models/LanguageModel.dart';
 import 'models/WeatherResponse.dart';
 
@@ -45,10 +42,16 @@ AppLocalizations? appLocale;
 void main() async {
    await WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
+
+   var setSystemUIOverlayStyle = SystemChrome.setSystemUIOverlayStyle(
+     SystemUiOverlayStyle(
+       statusBarColor: AppColors.whiteColor,
+       statusBarIconBrightness: Brightness.dark, // Based on background
+     ),
+   );
   defaultRadius = 10;
   defaultAppButtonRadius = 30;
   defaultBlurRadius = 4.0;
-  defaultLoaderAccentColorGlobal = colorPrimary;
 
   await initialize(defaultDialogBorderRadius: 10);
   appStore.setLanguage(getStringAsync(LANGUAGE, defaultValue: defaultLanguage));

@@ -223,14 +223,14 @@ class DetailPageVariant2WidgetState extends State<DetailPageVariant2Widget> {
               children: [
                 Container(
                   width: context.width(),
-                  decoration: BoxDecoration(borderRadius: radiusOnly(topLeft: 30, topRight: 30), color: appStore.isDarkMode ? scaffoldSecondaryDark : Colors.white),
+                  decoration: BoxDecoration(borderRadius: radiusOnly(topLeft: 30, topRight: 30), color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : Colors.white),
                   padding: EdgeInsets.only(left: 16, right: 16, top: 24),
                   // child: HtmlWidget(postContent: widget.postContent),
                   margin: EdgeInsets.only(bottom: 30),
                 ),
                 AppButton(
                   text: appLocalization.translate('view_Comments'),
-                  color: appStore.isDarkMode ? scaffoldSecondaryDark : colorPrimary,
+                  color: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.redColor,
                   textStyle: boldTextStyle(color: white),
                   onTap: () async {
                     await CommentListScreen(widget.newsData!.iD).launch(context);
@@ -246,7 +246,7 @@ class DetailPageVariant2WidgetState extends State<DetailPageVariant2Widget> {
                     Container(
                       padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
                       margin: EdgeInsets.only(left: 16, top: 32, bottom: 8),
-                      decoration: BoxDecoration(color: colorPrimary, borderRadius: radius(defaultRadius)),
+                      decoration: BoxDecoration(color: AppColors.redColor, borderRadius: radius(defaultRadius)),
                       child: Text(appLocalization.translate('related_news'), style: boldTextStyle(size: 12, color: Colors.white, letterSpacing: 1.5)),
                     ),
                     BreakingNewsListWidget(widget.relatedNews.validate()),
