@@ -1,0 +1,2 @@
+C:/Vinay/flutter/live_uttarpradesh/android/app/.cxx/Debug/284w6o1v/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Vinay/flutter/live_uttarpradesh/android/app/.cxx/Debug/284w6o1v/armeabi-v7a/CMakeFiles/rebuild_cache.dir

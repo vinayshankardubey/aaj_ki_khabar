@@ -10,9 +10,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.redColor,
+        iconTheme: IconThemeData(color: AppColors.whiteColor),
         toolbarHeight: 64,
-        title: Text("Privacy Policy",style: TextStyle(fontWeight: FontWeight.w500),),
+        title: Text("Privacy Policy",style: TextStyle(fontWeight: FontWeight.w500,color: AppColors.whiteColor),),
 
       ),
       body: SingleChildScrollView(
@@ -22,10 +23,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
           children: const [
             SectionTitle('Privacy Policy'),
             SectionText(
-              'This Privacy Policy governs the manner in which liveuttarakhand.com collects, uses, '
+              'This Privacy Policy governs the manner in which liveuttarpradesh.com collects, uses, '
                   'maintains and discloses information collected from users (each, a User) of the '
-                  'liveuttarakhand.com website (Site). This privacy policy applies to the Site, all products '
-                  'and services offered by liveuttarakhand.com.',
+                  'liveuttarpradesh.com website (Site). This privacy policy applies to the Site, all products '
+                  'and services offered by liveuttarpradesh.com.',
             ),
             SectionTitle('Personal Identification Information'),
             SectionText(
@@ -48,7 +49,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             ),
             SectionTitle('How We Use Collected Information?'),
             SectionText(
-              'liveuttarakhand.com collects and uses Users personal information for the following purposes:\n'
+              'liveuttarpradesh.com collects and uses Users personal information for the following purposes:\n'
                   '– To improve our Site\n'
                   '– To improve customer service',
             ),
@@ -68,7 +69,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             ),
             SectionTitle('Changes To This Privacy Policy'),
             SectionText(
-              'liveuttarakhand.com has the discretion to update this privacy policy at any time. '
+              'liveuttarpradesh.com has the discretion to update this privacy policy at any time. '
                   'We encourage Users to frequently check this page for any changes.',
             ),
             SectionTitle('Your Acceptance Of These Terms'),
@@ -78,7 +79,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             SectionTitle('Your Consent'),
             SectionText('By using our site, you consent to our privacy policy.'),
             SectionTitle('Contacting Us'),
-            SectionText('If you have any questions, contact us at @liveuttarakhand.com'),
+            SectionText('If you have any questions, contact us at @liveuttarpradesh.com'),
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:live_uttarakhand/provider/home_provider.dart';
+import 'package:live_uttarpradesh/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../AppLocalizations.dart';
 import '../../../AppTheme.dart';
@@ -42,11 +42,11 @@ AppLocalizations? appLocale;
 void main() async {
    await WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
-
-   var setSystemUIOverlayStyle = SystemChrome.setSystemUIOverlayStyle(
+   // Set red status bar color globally
+   SystemChrome.setSystemUIOverlayStyle(
      SystemUiOverlayStyle(
-       statusBarColor: AppColors.whiteColor,
-       statusBarIconBrightness: Brightness.dark, // Based on background
+       statusBarColor: AppColors.redColor,
+       statusBarIconBrightness: Brightness.light, // Light icons for red bg
      ),
    );
   defaultRadius = 10;

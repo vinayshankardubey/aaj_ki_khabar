@@ -34,7 +34,8 @@ class _CategoryDetailsViewScreenState extends State<CategoryDetailsViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.whiteColor,
+          iconTheme: IconThemeData(color: AppColors.whiteColor),
+            backgroundColor: AppColors.redColor,
           surfaceTintColor: Colors.transparent,
           toolbarHeight: 64,
 

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:live_uttarakhand/utils/app_images.dart';
+import 'package:live_uttarpradesh/utils/app_images.dart';
 
 import '../network/api/api_servies.dart';
 
@@ -27,17 +27,16 @@ class HomeProvider extends ChangeNotifier{
   bool get postLoading => _postLoading;
 
   List<String> categoryImageList = [
+    AppImages.Img18,
+    AppImages.adhyatamImg,
+    AppImages.businessImg,
+    AppImages.cityNewsImg,
+    AppImages.cricketImg,
     AppImages.crimeImg,
+    AppImages.entertainmentImg,
     AppImages.friendshipDayImg,
-    AppImages.iansImg,
-    AppImages.independenceDayImg,
-    AppImages.ipl2021Img,
-    AppImages.jobImg,
-    AppImages.kargilVijayDiwasImg,
-    AppImages.mainSlideImg,
-    AppImages.mansoonSessionImg,
-    AppImages.rakshabandhanImg,
-
+    AppImages.gadgetsImg,
+    AppImages.guruPurnimaImg,
   ];
 
   set isLoading(bool value){

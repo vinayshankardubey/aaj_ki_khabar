@@ -37,8 +37,8 @@ class _NewsItemDetailsWidgetState extends State<NewsItemDetailsWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.whiteColor,
-
+        backgroundColor: AppColors.redColor,
+        iconTheme: IconThemeData(color: AppColors.whiteColor),
         toolbarHeight: 64,
         title:  Image.asset(AppImages.appLogo,
           fit: BoxFit.fitHeight,

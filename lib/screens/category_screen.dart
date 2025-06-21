@@ -31,7 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.redColor,
           toolbarHeight: 64,
           title: Image.asset(AppImages.appLogo,
             fit: BoxFit.fitHeight,

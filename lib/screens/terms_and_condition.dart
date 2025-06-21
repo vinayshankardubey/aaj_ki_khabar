@@ -9,10 +9,11 @@ class TermsAndConditionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  AppBar(
-        backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.redColor,
         surfaceTintColor: Colors.transparent,
+        iconTheme: IconThemeData(color: AppColors.whiteColor),
         toolbarHeight: 64,
-        title: Text("Terms & Condition",style: TextStyle(fontWeight: FontWeight.w500),),
+        title: Text("Terms & Condition",style: TextStyle(fontWeight: FontWeight.w500,color: AppColors.whiteColor),),
 
 
       ),
@@ -35,14 +36,14 @@ class TermsAndConditionScreen extends StatelessWidget {
             ),
             SectionTitle('Usage License'),
             SectionText(
-              'Permission is granted to temporarily download one copy of the materials (information or software) on liveuttarakhand.com’s '
+              'Permission is granted to temporarily download one copy of the materials (information or software) on liveuttarpradesh.com’s '
                   'web site for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:\n\n'
                   '- Modify or copy the materials;\n'
                   '- Use the materials for any commercial purpose, or for any public display (commercial or non-commercial);\n'
-                  '- Attempt to decompile or reverse engineer any software contained on liveuttarakhand.com’s web site;\n'
+                  '- Attempt to decompile or reverse engineer any software contained on liveuttarpradesh.com’s web site;\n'
                   '- Remove any copyright or other proprietary notations from the materials; or\n'
                   '- Transfer the materials to another person or “mirror” the materials on any other server.\n\n'
-                  'This license shall automatically terminate if you violate any of these restrictions and may be terminated by liveuttarakhand.com at any time.',
+                  'This license shall automatically terminate if you violate any of these restrictions and may be terminated by liveuttarpradesh.com at any time.',
             ),
             SectionText(
               'Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials '
@@ -50,23 +51,23 @@ class TermsAndConditionScreen extends StatelessWidget {
             ),
             SectionTitle('Revisions and Errata'),
             SectionText(
-              'The materials appearing on liveuttarakhand.com’s web site could include technical, typographical, or photographic errors. '
-                  'liveuttarakhand.com does not warrant that any of the materials on its web site are accurate, complete, or current. '
-                  'liveuttarakhand.com may make changes to the materials contained on its web site at any time without notice. However, it does not make any commitment to update the materials.',
+              'The materials appearing on liveuttarpradesh.com’s web site could include technical, typographical, or photographic errors. '
+                  'liveuttarpradesh.com does not warrant that any of the materials on its web site are accurate, complete, or current. '
+                  'liveuttarpradesh.com may make changes to the materials contained on its web site at any time without notice. However, it does not make any commitment to update the materials.',
             ),
             SectionTitle('Links'),
             SectionText(
-              'aajkikhabar.Com has not reviewed all of the sites linked to its Internet web site and is not responsible for the contents of any such linked site. '
-                  'The inclusion of any link does not imply endorsement by liveuttarakhand.com. Use of any such linked web site is at the user’s own risk.',
+              'liveuttarpradesh.com has not reviewed all of the sites linked to its Internet web site and is not responsible for the contents of any such linked site. '
+                  'The inclusion of any link does not imply endorsement by liveuttarpradesh.com. Use of any such linked web site is at the user’s own risk.',
             ),
             SectionTitle('Site Terms of Use Modifications'),
             SectionText(
-              'liveuttarakhand.com may revise these terms of use for its web site at any time without notice. By using this web site you are agreeing '
+              'liveuttarpradesh.com may revise these terms of use for its web site at any time without notice. By using this web site you are agreeing '
                   'to be bound by the then current version of these Terms and Conditions of Use.',
             ),
             SectionTitle('Governing Law'),
             SectionText(
-              'Any claim relating to liveuttarakhand.com’s web site shall be governed by the laws of the State ‘Uttarakahnd’, India, jurisdiction Uttrarakhand, '
+              'Any claim relating to liveuttarpradesh.com’s web site shall be governed by the laws of the State ‘Uttar Pradesh’, India, jurisdiction Lucknow, '
                   'without regard to its conflict of law provisions.',
             ),
             SectionTitle('General Terms'),

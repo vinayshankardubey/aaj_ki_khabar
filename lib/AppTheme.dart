@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../utils/app_colors.dart';
+import 'package:live_uttarpradesh/utils/app_colors.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import 'main.dart';
 
 class AppTheme {
@@ -10,8 +9,8 @@ class AppTheme {
   AppTheme._();
 
   static final ThemeData lightTheme = ThemeData(
-    primarySwatch: createMaterialColor(AppColors.blackColor),
-    primaryColor: AppColors.whiteColor,
+    primarySwatch: createMaterialColor(AppColors.redColor),
+    primaryColor: AppColors.redColor,
     scaffoldBackgroundColor: Colors.white,
     fontFamily: GoogleFonts.roboto().fontFamily,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white),
@@ -34,8 +33,8 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData(
-    primarySwatch: createMaterialColor(AppColors.whiteColor),
-    primaryColor: AppColors.whiteColor,
+    primarySwatch: createMaterialColor(AppColors.redColor),
+    primaryColor: AppColors.redColor,
     scaffoldBackgroundColor: AppColors.scaffoldColorDark,
     fontFamily: GoogleFonts.roboto().fontFamily,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: AppColors.scaffoldSecondaryDark),

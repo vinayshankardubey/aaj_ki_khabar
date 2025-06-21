@@ -17,10 +17,11 @@ class AboutAppScreen extends StatelessWidget {
       top: !isIOS ? true : false,
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: AppColors.whiteColor),
           surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.redColor,
           toolbarHeight: 64,
-          title: Text("About us",style: TextStyle(fontWeight: FontWeight.w500),),
+          title: Text("About us",style: TextStyle(fontWeight: FontWeight.w500,color: AppColors.whiteColor),),
           centerTitle: true,
 
         ),
@@ -51,10 +52,10 @@ class AboutAppScreen extends StatelessWidget {
                   launchUrls(appUrl, forceWebView: true);
                 }),
                 16.height,
-                Text( "A venture of Swastik Transmedia Services Pvt. Ltd., liveuttarakhand.com is a hugely popular English and Hindi News Portal and Internet Video Channel. Based in Lucknow, Live Uttarakhand is the best destination for news and updates and aims to provide its readers unbiased and authentic news and updates."
-                      "Through its network of reporters and tie-ups with credible news agencies, liveuttarakhand.com publishes news that ranges from International to local level with constant updates that keep the readers truly informed. Catering to various sections of readers, aajkikhabar.com provides news to which different generations can relate and find useful.\n"
-                      "liveuttarakhand.com has a team of journalists with proven credentials and takes utmost care that the readers get the real news and updates about events and happenings that influence our lives."
-                      "liveuttarakhand.com provides news both in English and Hindi under various sections like International, National, Regional, Entertainment, Sports, Health, Science and Technology, Gadgets, and Human Interest.",
+                Text( "A venture of Swastik Transmedia Services Pvt. Ltd., liveuttarpradesh.com is a hugely popular English and Hindi News Portal and Internet Video Channel. Based in Lucknow, Live Uttarakhand is the best destination for news and updates and aims to provide its readers unbiased and authentic news and updates."
+                      "Through its network of reporters and tie-ups with credible news agencies, liveuttarpradesh.com  publishes news that ranges from International to local level with constant updates that keep the readers truly informed. Catering to various sections of readers, liveuttarpradesh.com  provides news to which different generations can relate and find useful.\n"
+                      "liveuttarpradesh.com has a team of journalists with proven credentials and takes utmost care that the readers get the real news and updates about events and happenings that influence our lives."
+                      "liveuttarpradesh.com provides news both in English and Hindi under various sections like International, National, Regional, Entertainment, Sports, Health, Science and Technology, Gadgets, and Human Interest.",
                       style: TextStyle(fontSize: 16)
                 ),
                   16.height,

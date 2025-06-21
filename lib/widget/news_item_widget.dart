@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:live_uttarakhand/utils/app_images.dart';
+import 'package:live_uttarpradesh/utils/app_images.dart';
 import 'package:shimmer/shimmer.dart';
 import '../utils/html_coversion.dart';
 

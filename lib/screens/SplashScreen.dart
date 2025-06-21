@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:live_uttarakhand/utils/app_images.dart';
+import 'package:live_uttarpradesh/utils/app_images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';

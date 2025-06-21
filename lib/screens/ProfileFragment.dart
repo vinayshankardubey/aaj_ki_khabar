@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:live_uttarakhand/screens/privacy_policy_screen.dart';
-import 'package:live_uttarakhand/screens/terms_and_condition.dart';
+import 'package:live_uttarpradesh/screens/privacy_policy_screen.dart';
+import 'package:live_uttarpradesh/screens/terms_and_condition.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
@@ -36,7 +36,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.redColor,
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 64,
         title:  Image.asset(AppImages.appLogo,
@@ -90,7 +90,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
 
         SettingItemWidget(
         leading: Icon(Icons.share_outlined),
-        title: 'Share Live Uttarakhand ',
+        title: 'Share Live UttarPradesh ',
         onTap: () {
         PackageInfo.fromPlatform().then((value) {
         String package = '';

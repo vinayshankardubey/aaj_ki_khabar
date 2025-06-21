@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:live_uttarakhand/provider/home_provider.dart';
-import 'package:live_uttarakhand/widget/custom_shimmer_container.dart';
-import 'package:live_uttarakhand/widget/news_item_details_widget.dart';
-import 'package:live_uttarakhand/widget/trending_news_widget.dart';
+import 'package:live_uttarpradesh/provider/home_provider.dart';
+import 'package:live_uttarpradesh/widget/custom_shimmer_container.dart';
+import 'package:live_uttarpradesh/widget/news_item_details_widget.dart';
+import 'package:live_uttarpradesh/widget/trending_news_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/app_colors.dart';
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 0,
         surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.redColor,
         toolbarHeight: 64,
         title: Image.asset(AppImages.appLogo,
           fit: BoxFit.fitHeight,
@@ -379,11 +379,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget footerWidget(){
     return Container(
-      color: AppColors.blackColor,
+      color: AppColors.redColor,
       padding: EdgeInsets.symmetric(horizontal: 30,vertical: 20),
       child: Column(
         children: [
-          Image.asset(AppImages.footerLogo,),
+          Image.asset(AppImages.appLogo,),
           SizedBox(height: 20,),
           Text("LiveUttarakhand.Com is initiative of 'Prizm Media Solutions', A organisation devoted to latest news and information sector.",
             softWrap: true,
