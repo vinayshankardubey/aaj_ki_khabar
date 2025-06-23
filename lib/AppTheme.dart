@@ -9,9 +9,10 @@ class AppTheme {
   AppTheme._();
 
   static final ThemeData lightTheme = ThemeData(
+
     primarySwatch: createMaterialColor(AppColors.redColor),
     primaryColor: AppColors.redColor,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColors.whiteColor,
     fontFamily: GoogleFonts.roboto().fontFamily,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white),
     iconTheme: IconThemeData(color: AppColors.scaffoldSecondaryDark),

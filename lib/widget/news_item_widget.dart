@@ -24,7 +24,7 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
   @override
   Widget build(BuildContext context) {
     final post = widget.postData[widget.index];
-    print("total length ${post["_embedded"]["wp:term"][0]}");
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,7 +32,8 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
         SizedBox(
           height: 200,
           width: double.infinity,
-          child: CachedNetworkImage(
+          child: post["_embedded"]["wp:featuredmedia"]!=null && post["_embedded"]["wp:featuredmedia"][0]["source_url"]!=null
+          ? CachedNetworkImage(
             imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
             width: double.infinity,
             height: 250,
@@ -62,6 +63,10 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
                child: Image.asset(AppImages.appLogo),
              ),
           )
+          : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Image.asset(AppImages.appLogo),
+          ),
         ),
 
         const SizedBox(height: 20),
@@ -83,7 +88,7 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
 
         // Description
         Text(
-          HtmlConversion.parseHtmlString(post["content"]["rendered"]),
+          HtmlConversion.extractReadableText(post["content"]["rendered"]),
           maxLines: 5,
           softWrap: true,
           overflow: TextOverflow.ellipsis,
@@ -119,7 +124,7 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
             SizedBox(width: 10.0,),
             Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? ""),
             SizedBox(width: 10.0,),
-            Text("by ", style: TextStyle(fontWeight: FontWeight.w500)),
+            Text("by ${post["_embedded"]["author"][0]["name"]}", style: TextStyle(fontWeight: FontWeight.w500)),
             Spacer(),
             Icon(Icons.messenger_outline, size: 20),
             SizedBox(width: 5.0,),

@@ -35,7 +35,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 
   void init() async {
-    setDynamicStatusBarColor();
+    setDynamicStatusBarColor(color: AppColors.redColor);
     setValue(banner, mDisplayBanner);
     setValue(interstitial, mDisplayInterstitial);
     setValue(reward, mDisplayReward);
@@ -116,6 +116,8 @@ class DashboardScreenState extends State<DashboardScreen> {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
+          setDynamicStatusBarColor(color: AppColors.redColor);
+
           DateTime now = DateTime.now();
           if (currentIndex == 0) {
             if (currentBackPressTime == null || now.difference(currentBackPressTime!) > 2.seconds) {

@@ -12,7 +12,7 @@
     <application
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Live Uttarakhand"
+        android:label="Live UttarPradesh"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"

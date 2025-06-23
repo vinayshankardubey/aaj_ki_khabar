@@ -75,7 +75,7 @@ class HomeProvider extends ChangeNotifier{
   Future<void> fetchOtherStateData()async{
     _isLoading = true;
      notifyListeners();
-    _otherStateData = await ApiServices.fetchCategoryData(page: 1, perPage: 10,categoryId: _allCategoryData[0]["id"]);
+    _otherStateData = await ApiServices.fetchCategoryData(page: 1, perPage: 10,categoryId: _allCategoryData[1]["id"]);
     _isLoading = false;
     notifyListeners();
   }

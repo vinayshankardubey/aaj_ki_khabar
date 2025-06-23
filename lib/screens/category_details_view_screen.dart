@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/home_provider.dart';
+import '../utils/Common.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_images.dart';
 import '../widget/custom_shimmer_container.dart';
@@ -32,155 +33,156 @@ class _CategoryDetailsViewScreenState extends State<CategoryDetailsViewScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: AppColors.whiteColor),
-            backgroundColor: AppColors.redColor,
-          surfaceTintColor: Colors.transparent,
-          toolbarHeight: 64,
-
-          title: Image.asset(AppImages.appLogo,
-            fit: BoxFit.fitHeight,
-            width: 180,
+    return WillPopScope(
+      onWillPop: () async{
+        setDynamicStatusBarColor(color: AppColors.redColor);
+        return true;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            title: Image.asset(
+              AppImages.appLogo,
+              fit: BoxFit.fitHeight,
+              width: 180,
+            ),
           ),
 
-        ),
+          body: SingleChildScrollView(
+            child: Consumer<HomeProvider>(
+                builder: (context,homeProvider,child) {
+                  return Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child:
+                      homeProvider.singleCategoryData.isNotEmpty && homeProvider.isLoading == false
+                      ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: homeProvider.singleCategoryData.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder:(context,index){
+                                    print("length is ${homeProvider.singleCategoryData.length}");
+                                    return InkWell(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(
+                                          postData: homeProvider.singleCategoryData,
+                                          index: index,
 
-        body: SingleChildScrollView(
-          child: Consumer<HomeProvider>(
-              builder: (context,homeProvider,child) {
-                return Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child:
-                    homeProvider.singleCategoryData.isNotEmpty && homeProvider.isLoading == false
-                    ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: homeProvider.singleCategoryData.length,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder:(context,index){
-                                  print("length is ${homeProvider.singleCategoryData.length}");
-                                  return InkWell(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(
+                                        )));
+                                      },
+                                      child: NewsItemWidget(
+                                       index: index,
                                         postData: homeProvider.singleCategoryData,
-                                        index: index,
-
-                                      )));
-                                    },
-                                    child: NewsItemWidget(
-                                     index: index,
-                                      postData: homeProvider.singleCategoryData,
-                                    ),
-                                  );
-                                } ),
+                                      ),
+                                    );
+                                  } ),
 
 
-                        //Top of the Week
-                        SizedBox(height: 10,),
-                        Text("Top of The Week",style:TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
-                        SizedBox(height: 10,),
-                        homeProvider.topOfTheWeekData.isNotEmpty && homeProvider.isLoading==false ?
-                        ListView.builder(
-                          itemCount: homeProvider.topOfTheWeekData.length>5 ? 5 : homeProvider.topOfTheWeekData.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(
-                                    postData: homeProvider.topOfTheWeekData,
+                          //Top of the Week
+                          SizedBox(height: 10,),
+                          Text("Top of The Week",style:TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
+                          SizedBox(height: 10,),
+                          homeProvider.topOfTheWeekData.isNotEmpty && homeProvider.isLoading==false ?
+                          ListView.builder(
+                            itemCount: homeProvider.topOfTheWeekData.length>5 ? 5 : homeProvider.topOfTheWeekData.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(
+                                      postData: homeProvider.topOfTheWeekData,
+                                      index: index,
+                                    )));
+                                  },
+                                  child: WeekNewsItemWidget(
+                                    weekData: homeProvider.topOfTheWeekData,
                                     index: index,
-                                  )));
-                                },
-                                child: WeekNewsItemWidget(
-                                  weekData: homeProvider.topOfTheWeekData,
-                                  index: index,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ):SizedBox(),
+                              );
+                            },
+                          ):SizedBox(),
 
-                        //Trending Section
-                        SizedBox(height: 10,),
-                        Text("Trending Now",style:TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
-                        SizedBox(height: 10,),
-                        ListView.builder(
-                          itemCount: homeProvider.topOfTheWeekData.length> 5 ? 4 : homeProvider.topOfTheWeekData.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index1) {
-                            int index = index1;
-                            if(homeProvider.topOfTheWeekData.length>5){
-                              index =  index1 +5;
-                            }else{
-                              index = index1;
-                            }
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 25),
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(
-                                    postData: homeProvider.topOfTheWeekData,
-                                    index: index,
-                                  )));
-                                },
-                                child: TrendingNewsWidget(index: index, postData:  homeProvider.topOfTheWeekData),
-                              ),
-                            );
-                          },
+                          //Trending Section
+                          SizedBox(height: 10,),
+                          Text("Trending Now",style:TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
+                          SizedBox(height: 10,),
+                          ListView.builder(
+                            itemCount: homeProvider.topOfTheWeekData.length> 5 ? 4 : homeProvider.topOfTheWeekData.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index1) {
+                              int index = index1;
+                              if(homeProvider.topOfTheWeekData.length>5){
+                                index =  index1 +5;
+                              }else{
+                                index = index1;
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(
+                                      postData: homeProvider.topOfTheWeekData,
+                                      index: index,
+                                    )));
+                                  },
+                                  child: TrendingNewsWidget(index: index, postData:  homeProvider.topOfTheWeekData),
+                                ),
+                              );
+                            },
+                          ),
+
+                        ],)
+                     :
+                      homeProvider.postLoading == false && homeProvider.singleCategoryData.isEmpty
+                        ? SizedBox(
+                        height: MediaQuery.of(context).size.height/1.3,
+                        child: Center(child: Text("No News Found",textAlign: TextAlign.center,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)))
+                          : ListView.builder(
+                        itemCount: 3,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context,index){
+                        return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        // image
+                        CustomShimmerContainer(height: 200,),
+                        const SizedBox(height: 20),
+                        // Title
+                        CustomShimmerContainer(height: 10,),
+                        const SizedBox(height: 15),
+                        //desc
+                        CustomShimmerContainer(height: 10,),
+                        const SizedBox(height: 15),
+                        // Bottom info row
+                        Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        CustomShimmerContainer(height: 20,width: 50,),
+                        const SizedBox(width: 10),
+                        CustomShimmerContainer(height: 20,width: 50,),
+                        const Spacer(),
+                        CustomShimmerContainer(height: 20,width: 50,),
+                        ],
                         ),
-
-                      ],)
-                   :
-                    homeProvider.postLoading == false && homeProvider.singleCategoryData.isEmpty
-                      ? SizedBox(
-                      height: MediaQuery.of(context).size.height/1.3,
-                      child: Center(child: Text("No News Found",textAlign: TextAlign.center,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)))
-                        : ListView.builder(
-                      itemCount: 3,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context,index){
-                      return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      // image
-                      CustomShimmerContainer(height: 200,),
-                      const SizedBox(height: 20),
-                      // Title
-                      CustomShimmerContainer(height: 10,),
-                      const SizedBox(height: 15),
-                      //desc
-                      CustomShimmerContainer(height: 10,),
-                      const SizedBox(height: 15),
-                      // Bottom info row
-                      Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      CustomShimmerContainer(height: 20,width: 50,),
-                      const SizedBox(width: 10),
-                      CustomShimmerContainer(height: 20,width: 50,),
-                      const Spacer(),
-                      CustomShimmerContainer(height: 20,width: 50,),
-                      ],
-                      ),
-                      SizedBox(height: 10,),
-                      ],
-                      );},
-                    )
-                );
-              }
-          ),
-        )
+                        SizedBox(height: 10,),
+                        ],
+                        );},
+                      )
+                  );
+                }
+            ),
+          )
+      ),
     );
   }
 }

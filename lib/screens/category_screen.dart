@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/home_provider.dart';
+import '../utils/Common.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_images.dart';
 import 'category_details_view_screen.dart';
@@ -20,6 +21,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<HomeProvider>(context, listen: false).fetchAllCategoryData();
     });
@@ -27,13 +29,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    setDynamicStatusBarColor(color: AppColors.redColor);
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.redColor,
-          toolbarHeight: 64,
-          title: Image.asset(AppImages.appLogo,
+          title: Image.asset(
+            AppImages.appLogo,
             fit: BoxFit.fitHeight,
             width: 180,
           ),

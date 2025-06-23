@@ -133,3 +133,7 @@ const SEARCH_DATA = 'SEARCH_DATA';
 /* breaking news */
 const FILTER = 'filter';
 const FILTER_FEATURE = 'feature';
+
+
+const footerText = "Live UttarPradesh.Com is initiative of 'Media Matrix', A organisation devoted to latest news and information sector.";
+const copyrightReserved = "© Copyright 2018 Live Uttar Pradesh";

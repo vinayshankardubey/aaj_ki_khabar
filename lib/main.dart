@@ -42,18 +42,12 @@ AppLocalizations? appLocale;
 void main() async {
    await WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
-   // Set red status bar color globally
-   SystemChrome.setSystemUIOverlayStyle(
-     SystemUiOverlayStyle(
-       statusBarColor: AppColors.redColor,
-       statusBarIconBrightness: Brightness.light, // Light icons for red bg
-     ),
-   );
+
   defaultRadius = 10;
   defaultAppButtonRadius = 30;
   defaultBlurRadius = 4.0;
 
-  await initialize(defaultDialogBorderRadius: 10);
+   await initialize(defaultDialogBorderRadius: 10);
   appStore.setLanguage(getStringAsync(LANGUAGE, defaultValue: defaultLanguage));
   appStore.setNotification(getBoolAsync(IS_NOTIFICATION_ON, defaultValue: true));
   appStore.setTTSLanguage(getStringAsync(TEXT_TO_SPEECH_LANG, defaultValue: defaultTTSLanguage));

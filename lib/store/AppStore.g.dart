@@ -205,10 +205,17 @@ mixin _$AppStore on _AppStore, Store {
       Atom(name: '_AppStore.appBarTheme', context: context);
 
   @override
-  AppBarTheme get appBarTheme {
-    _$appBarThemeAtom.reportRead();
-    return super.appBarTheme;
-  }
+  AppBarTheme get appBarTheme => AppBarTheme(
+    backgroundColor: AppColors.redColor,
+    surfaceTintColor: Colors.transparent,
+    elevation: 0,
+    iconTheme: IconThemeData(color: AppColors.whiteColor),
+    titleTextStyle: TextStyle(
+      color: AppColors.whiteColor,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+    ),
+  );
 
   @override
   set appBarTheme(AppBarTheme value) {

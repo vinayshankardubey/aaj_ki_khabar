@@ -90,8 +90,7 @@ class WeekNewsItemWidget extends StatelessWidget {
                     SizedBox(width: 10.0),
                     Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? "", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
                     SizedBox(width: 10.0),
-                    Text("by ", style: TextStyle(fontWeight: FontWeight.w500)),
-                    Spacer(),
+
                   ],
                 ),
               ],
