@@ -55,6 +55,7 @@ dependencies:
   provider: ^6.1.4
   image: ^4.5.4
   youtube_player_flutter: ^9.1.1
+  carousel_slider: ^5.1.1
 
 
 dev_dependencies:

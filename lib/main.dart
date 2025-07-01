@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:live_uttarpradesh/provider/home_provider.dart';
+import 'package:live_uttarpradesh/provider/live_tv_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../AppLocalizations.dart';
 import '../../../AppTheme.dart';
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
       builder: (_) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => HomeProvider()),
+          ChangeNotifierProvider(create: (_) => LiveTvProvider()),
         ],
         child: MaterialApp(
           navigatorKey: navigatorKey,

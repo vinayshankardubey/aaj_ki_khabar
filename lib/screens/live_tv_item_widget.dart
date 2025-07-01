@@ -1,22 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/Common.dart' as HtmlConversion;
 
-class WeekNewsItemWidget extends StatelessWidget {
-  final List<dynamic> weekData;
+class LiveTvItemWidget extends StatelessWidget {
+  final List<dynamic> liveTvData;
   final int index;
-  const WeekNewsItemWidget({
-    super.key, required this.weekData,
+  const LiveTvItemWidget({
+    super.key, required this.liveTvData,
     required this.index
   });
 
   @override
   Widget build(BuildContext context) {
-    final post = weekData[index];
+    final post = liveTvData[index];
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5,),
       child: Row(
@@ -56,6 +57,7 @@ class WeekNewsItemWidget extends StatelessWidget {
                 ),
               )
           ),
+
           SizedBox(width: 10),
           Flexible(
             child: Column(
@@ -96,7 +98,19 @@ class WeekNewsItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          InkWell(
+             onTap: (){
+               final videoUrl = post["link"];
+               try{
+                   Share.share(videoUrl);
+                } catch (ex){
+                 debugPrint("Exception occurred while sharing $ex");
+               }
+             },
+              child: Icon(Icons.more_vert)
+            ),
+
         ],
       ),
     );

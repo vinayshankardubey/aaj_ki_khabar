@@ -62,7 +62,6 @@ class _CategoryDetailsViewScreenState extends State<CategoryDetailsViewScreen> {
                                   itemCount: homeProvider.singleCategoryData.length,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder:(context,index){
-                                    print("length is ${homeProvider.singleCategoryData.length}");
                                     return InkWell(
                                       onTap: (){
                                         Navigator.push(context, MaterialPageRoute(builder: (context)=>NewsItemDetailsWidget(

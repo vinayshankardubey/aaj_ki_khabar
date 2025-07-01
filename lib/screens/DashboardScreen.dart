@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:live_uttarpradesh/screens/home_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../AppLocalizations.dart';
@@ -13,7 +12,7 @@ import '../screens/ProfileFragment.dart';
 import '../../../utils/extension.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'category_screen.dart';
+import 'live_tv_view.dart';
 
 class DashboardScreen extends StatefulWidget {
   static String tag = '/DashboardScreen';
@@ -43,7 +42,7 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     widgets.add(HomeScreen());
     // widgets.add(SuggestedForYouFragment());
-    widgets.add(CategoryScreen());
+    widgets.add(LiveTvScreen());
     // widgets.add(SearchNewsFragment());
     widgets.add(ProfileFragment());
 
@@ -143,9 +142,9 @@ class DashboardScreenState extends State<DashboardScreen> {
               currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(AntDesign.home, color: context.theme.iconTheme.color),
+                  icon: Icon(Icons.home, color: context.theme.iconTheme.color,size: 28,),
                   label: 'Home',
-                  activeIcon: Icon(AntDesign.home, color: AppColors.redColor),
+                  activeIcon: Icon(Icons.home_outlined, color: AppColors.redColor,size: 28),
                 ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(Icons.dashboard_outlined, color: context.theme.iconTheme.color),
@@ -153,9 +152,9 @@ class DashboardScreenState extends State<DashboardScreen> {
                 //   activeIcon: Icon(Icons.dashboard_outlined, color: colorPrimary),
                 // ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.category_outlined, color: context.theme.iconTheme.color),
-                  label: 'Category',
-                  activeIcon: Icon(Icons.category_outlined, color: AppColors.redColor),
+                  icon: Icon(Icons.live_tv, color: context.theme.iconTheme.color,size: 28,),
+                  label: 'Live Tv',
+                  activeIcon: Icon(Icons.live_tv_outlined, color: AppColors.redColor,size: 28,),
                 ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(Ionicons.ios_search, color: context.theme.iconTheme.color),
@@ -165,7 +164,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                 BottomNavigationBarItem(
                   icon: appStore.isLoggedIn
                       ? cachedImage(appStore.userProfileImage, height: 24, width: 24, fit: BoxFit.cover).cornerRadiusWithClipRRect(15)
-                      : Icon(MaterialIcons.person_outline, color: context.theme.iconTheme.color),
+                      : Icon(Icons.person, color: context.theme.iconTheme.color,size: 28,),
                   label: 'Profile',
                   activeIcon: appStore.isLoggedIn
                       ? Container(
@@ -176,7 +175,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                             width: 24,
                             fit: BoxFit.cover,
                           ).cornerRadiusWithClipRRect(15))
-                      : Icon(MaterialIcons.person_outline, color: AppColors.redColor),
+                      : Icon(Icons.person, color: AppColors.redColor,size: 28,),
                 ),
               ],
               type: BottomNavigationBarType.fixed,
