@@ -1,3 +1,4 @@
+import 'package:aaj_ki_khabar/provider/live_tv_provider.dart';
 import 'package:async/async.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -12,8 +13,6 @@ import '../../../AppTheme.dart';
 import '../../../models/FontSizeModel.dart';
 import '../../../screens/SplashScreen.dart';
 import '../../../store/AppStore.dart';
-import '../../../utils/AdConfigurationConstants.dart';
-import '../../../utils/AdMobUtils.dart';
 import '../../../utils/Colors.dart';
 import '../../../utils/Constants.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -93,6 +92,7 @@ class MyApp extends StatelessWidget {
       builder: (_) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => HomeProvider()),
+          ChangeNotifierProvider(create: (_) => LiveTvProvider()),
         ],
         child: MaterialApp(
           navigatorKey: navigatorKey,

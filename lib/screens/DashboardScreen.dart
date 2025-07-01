@@ -1,7 +1,7 @@
 import 'dart:ui';
+import 'package:aaj_ki_khabar/screens/live_tv_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:aaj_ki_khabar/screens/home_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../AppLocalizations.dart';
@@ -43,7 +43,7 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     widgets.add(HomeScreen());
     // widgets.add(SuggestedForYouFragment());
-    widgets.add(CategoryScreen());
+    widgets.add(LiveTvScreen());
     // widgets.add(SearchNewsFragment());
     widgets.add(ProfileFragment());
 
@@ -74,7 +74,6 @@ class DashboardScreenState extends State<DashboardScreen> {
       appStore.setLanguage(appStore.selectedLanguageCode, context: context);
 
       if (isMobile) {
-
         OneSignal.Notifications.addClickListener((_handleNotificationOpened) async {
         // OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult notification) async {
           if (_handleNotificationOpened.notification.additionalData!.containsKey('ID')) {
@@ -140,9 +139,9 @@ class DashboardScreenState extends State<DashboardScreen> {
               currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(AntDesign.home, color: context.theme.iconTheme.color),
+                  icon: Icon(Icons.home, color: context.theme.iconTheme.color,size: 28,),
                   label: 'Home',
-                  activeIcon: Icon(AntDesign.home, color: colorPrimary),
+                  activeIcon: Icon(Icons.home_outlined, color: redColor,size: 28),
                 ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(Icons.dashboard_outlined, color: context.theme.iconTheme.color),
@@ -150,9 +149,9 @@ class DashboardScreenState extends State<DashboardScreen> {
                 //   activeIcon: Icon(Icons.dashboard_outlined, color: colorPrimary),
                 // ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.category_outlined, color: context.theme.iconTheme.color),
-                  label: 'Category',
-                  activeIcon: Icon(Icons.category_outlined, color: colorPrimary),
+                  icon: Icon(Icons.live_tv, color: context.theme.iconTheme.color,size: 28,),
+                  label: 'Live Tv',
+                  activeIcon: Icon(Icons.live_tv_outlined, color: redColor,size: 28,),
                 ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(Ionicons.ios_search, color: context.theme.iconTheme.color),
@@ -162,18 +161,18 @@ class DashboardScreenState extends State<DashboardScreen> {
                 BottomNavigationBarItem(
                   icon: appStore.isLoggedIn
                       ? cachedImage(appStore.userProfileImage, height: 24, width: 24, fit: BoxFit.cover).cornerRadiusWithClipRRect(15)
-                      : Icon(MaterialIcons.person_outline, color: context.theme.iconTheme.color),
+                      : Icon(Icons.person, color: context.theme.iconTheme.color,size: 28,),
                   label: 'Profile',
                   activeIcon: appStore.isLoggedIn
                       ? Container(
-                          decoration: BoxDecoration(border: Border.all(color: colorPrimary), shape: BoxShape.circle),
-                          child: cachedImage(
-                            appStore.userProfileImage,
-                            height: 24,
-                            width: 24,
-                            fit: BoxFit.cover,
-                          ).cornerRadiusWithClipRRect(15))
-                      : Icon(MaterialIcons.person_outline, color: colorPrimary),
+                      decoration: BoxDecoration(border: Border.all(color: grayColor), shape: BoxShape.circle),
+                      child: cachedImage(
+                        appStore.userProfileImage,
+                        height: 24,
+                        width: 24,
+                        fit: BoxFit.cover,
+                      ).cornerRadiusWithClipRRect(15))
+                      : Icon(Icons.person, color: redColor,size: 28,),
                 ),
               ],
               type: BottomNavigationBarType.fixed,

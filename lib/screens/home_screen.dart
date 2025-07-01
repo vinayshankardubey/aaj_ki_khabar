@@ -3,11 +3,13 @@ import 'package:aaj_ki_khabar/provider/home_provider.dart';
 import 'package:aaj_ki_khabar/widget/custom_shimmer_container.dart';
 import 'package:aaj_ki_khabar/widget/news_item_details_widget.dart';
 import 'package:aaj_ki_khabar/widget/trending_news_widget.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-
 import '../utils/Colors.dart';
 import '../widget/news_item_widget.dart';
 import '../widget/week_news_item_widget.dart';
+import 'category_details_view_screen.dart';
+import 'category_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,11 +59,64 @@ class _HomeScreenState extends State<HomeScreen> {
                          padding: const EdgeInsets.all(15.0),
                          child:Column(
                           children: [
-                                 SizedBox(height: 10,),
+
                                  homeProvider.postLoading == false && homeProvider.postsData.isNotEmpty ?
                                  Column(
                                    crossAxisAlignment: CrossAxisAlignment.start,
                                    children: [
+
+                                     //all category
+                                     if(homeProvider.categoryData != null &&
+                                         homeProvider.categoryData.isNotEmpty)
+                                       ...[
+                                         Row(
+                                           mainAxisAlignment: MainAxisAlignment
+                                               .spaceBetween,
+                                           children: [
+                                             Text("News category", style: TextStyle(
+                                                 fontSize: 18.0,
+                                                 fontWeight: FontWeight.bold),),
+                                             InkWell(
+                                               onTap: (){
+                                                 Navigator.push(context,MaterialPageRoute(builder: (context)=> CategoryScreen()));
+                                               },
+                                               child: Text("See all", style: TextStyle(
+                                                   fontSize: 18.0,
+                                                   color: redColor,
+                                                   fontWeight: FontWeight.bold),),
+                                             ),
+                                           ],
+                                         ),
+
+                                         SingleChildScrollView(
+                                           scrollDirection: Axis.horizontal,
+                                           child: Row(
+                                             children: List.generate(
+                                                 homeProvider.categoryData.length, (
+                                                 index) {
+                                               return InkWell(
+                                                   onTap: (){
+                                                     homeProvider.singleCategoryData = [];
+                                                     homeProvider.update();
+
+                                                     Navigator.push(
+                                                       context,
+                                                       MaterialPageRoute(
+                                                         builder: (context) => CategoryDetailsViewScreen(
+                                                           categoryId: homeProvider.filterList[index]["id"],
+                                                         ),
+                                                       ),
+                                                     );
+                                                   },
+                                                   child: _buildCategoryChip(name: homeProvider.categoryData[index]["name"]));
+                                             }),
+                                           ),
+                                         )
+
+                                       ] else
+                                       ...[
+                                         SizedBox()
+                                       ],
 
                                      // All News Section
                                    ListView.builder(
@@ -372,5 +427,17 @@ class _HomeScreenState extends State<HomeScreen> {
            ),
       )
     );
+  }
+  Widget _buildCategoryChip({required String name}) {
+    return Chip(
+      label: Text(
+        name,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ).paddingOnly(right: 8,bottom: 10,top: 10);
   }
 }

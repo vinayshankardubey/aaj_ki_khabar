@@ -11,13 +11,12 @@ class HomeProvider extends ChangeNotifier{
   List<dynamic> _postsData = [];
   List<dynamic> _otherStateData = [];
   List<dynamic> _allCategoryData = [];
-  List<dynamic> _singleCategoryData = [];
+  List<dynamic> singleCategoryData = [];
   List<dynamic> _internationalData = [];
   List<dynamic> _topOfTheWeekData = [];
 
   List<dynamic> get postsData => _postsData;
   List<dynamic> get categoryData => _allCategoryData;
-  List<dynamic> get singleCategoryData => _singleCategoryData;
   List<dynamic> get otherStateData => _otherStateData;
   List<dynamic> get internationalData => _internationalData;
   List<dynamic> get topOfTheWeekData => _topOfTheWeekData;
@@ -27,6 +26,10 @@ class HomeProvider extends ChangeNotifier{
 
   set isLoading(bool value){
     _isLoading = value;
+    notifyListeners();
+  }
+
+  void update(){
     notifyListeners();
   }
 
@@ -41,7 +44,7 @@ class HomeProvider extends ChangeNotifier{
      if(categoryId == null){
        _postsData = await ApiServices.fetchPostData(page: page, perPage: perPage);
      }else{
-       _singleCategoryData = await ApiServices.fetchPostData(page: 1, perPage: 10,categoryId: categoryId);
+       singleCategoryData = await ApiServices.fetchPostData(page: 1, perPage: 10,categoryId: categoryId);
      }
     _postLoading = false;
     notifyListeners();

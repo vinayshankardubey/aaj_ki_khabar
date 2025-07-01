@@ -61,7 +61,7 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
               ),
             ),
             errorWidget: (context, url, error) =>
-            const Icon(Icons.error),
+                Image.asset("assets/images/app_image.png"),
           )
         ),
 
