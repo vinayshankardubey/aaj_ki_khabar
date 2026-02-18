@@ -58,9 +58,9 @@ void main() async {
 
   int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
   if (themeModeIndex == ThemeModeLight) {
-    appStore.setDarkMode(false);
+    await appStore.setDarkMode(false);
   } else if (themeModeIndex == ThemeModeDark) {
-    appStore.setDarkMode(true);
+    await appStore.setDarkMode(true);
   }
 
   fontSize = fontSizes.firstWhere((element) => element.fontSize == getIntAsync(FONT_SIZE_PREF, defaultValue: 16));
@@ -81,6 +81,13 @@ void main() async {
   }
 
   setOrientationPortrait();
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+  ));
+
   runApp(MyApp());
 }
 

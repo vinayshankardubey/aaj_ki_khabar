@@ -28,34 +28,47 @@ class DetailPageVariant1Widget extends StatefulWidget {
   _DetailPageVariant1WidgetState createState() => _DetailPageVariant1WidgetState();
 }
 
-class _DetailPageVariant1WidgetState extends State<DetailPageVariant1Widget> {
+class _DetailPageVariant1WidgetState extends State<DetailPageVariant1Widget> with SingleTickerProviderStateMixin {
   bool? isLike;
-
   int? count;
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
-
-    print("This Is Detail page Varient Widget");
     isLike = widget.newsData!.is_like.validate();
     count = widget.newsData!.like_count;
+    
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeIn);
+    _animationController.forward();
+
     setDynamicStatusBarColorDetail(milliseconds: 400);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   Future<void> likeDislike(int id) async {
     Map req = {'post_id': id};
     blogLikeDisLike(req: req).then((res) {
-      if (res.isLike == true) {
-        count = count! + 1;
-      } else {
-        count = count! - 1;
-      }
-      isLike = res.isLike!;
+      setState(() {
+        if (res.isLike == true) {
+          count = count! + 1;
+        } else {
+          count = count! - 1;
+        }
+        isLike = res.isLike!;
+      });
       toast(res.message);
-      setState(() {});
     }).catchError((error) {
-      appStore.isLoading = false;
       toast(error.toString());
     });
   }
@@ -64,144 +77,142 @@ class _DetailPageVariant1WidgetState extends State<DetailPageVariant1Widget> {
   Widget build(BuildContext context) {
     var appLocalization = AppLocalizations.of(context)!;
 
-    return SafeArea(
-      top: !isIOS,
+    return FadeTransition(
+      opacity: _fadeAnimation,
       child: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 32, bottom: 80),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(bottom: 100),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.newsData!.category.validate().isNotEmpty)
-              Text(
-                widget.newsData!.category!.first.name.validate().toUpperCase(),
-                style: boldTextStyle(size: 12, color: AppColors.redColor, letterSpacing: 1.2),
-              ).paddingSymmetric(horizontal: 16),
-            16.height,
-            Text(
-              parseHtmlString(widget.newsData!.post_title.validate()),
-              style: boldTextStyle(size: 32, fontFamily: titleFont(), letterSpacing: 0.5),
-            ).paddingSymmetric(horizontal: 16),
-            16.height,
-            Row(
+            // Featured Image (Edge to Edge)
+            Stack(
               children: [
-                Text(widget.newsData!.human_time_diff.validate().toUpperCase(), style: secondaryTextStyle(size: 12)),
-                4.width,
-                Text('- ', style: secondaryTextStyle()),
-                Text(getArticleReadTime(context, widget.newsData!.post_content.validate()), style: secondaryTextStyle(size: 12)).expand(),
-                IconButton(
-                  onPressed: () {
-                    //
-                    likeDislike(widget.newsData!.iD.validate());
-                    setState(() {});
-                  },
-                  icon: Icon(isLike == true ? Icons.thumb_up : Icons.thumb_up_alt_outlined),
+                Hero(
+                  tag: widget.heroTag ?? widget.newsData!.iD.toString(),
+                  child: cachedImage(
+                    widget.newsData!.full_image.validate(),
+                    height: 350,
+                    fit: BoxFit.cover,
+                    width: context.width(),
+                  ),
                 ),
-                Text('${count.validate()}', style: primaryTextStyle(size: 18))
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    height: 100,
+                    width: context.width(),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          context.scaffoldBackgroundColor,
+                          context.scaffoldBackgroundColor.withOpacity(0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
-            ).paddingSymmetric(horizontal: 16),
-            24.height,
-            Container(
-              decoration: boxDecorationRoundedWithShadow(
-                8,
-                backgroundColor: context.cardColor,
-                shadowColor: appStore.isDarkMode ? Colors.grey.shade700 : Colors.black.withOpacity(0.6),
-                offset: Offset(0.5, 0.5),
-                blurRadius: defaultBlurRadius,
-              ),
-              child: cachedImage(
-                widget.newsData!.full_image.validate(),
-                height: 180,
-                fit: BoxFit.cover,
-                width: context.width(),
-                alignment: Alignment.topCenter,
-              ).cornerRadiusWithClipRRect(8),
-            ).paddingSymmetric(horizontal: 16),
-            24.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextIcon(
-                  onTap: () async {
-                    print("Detail Page Varien tTime 1");
-
-                    await CommentListScreen(widget.newsData!.iD).launch(context);
-                    setDynamicStatusBarColorDetail(milliseconds: 400);
-
-                    setState(() {
-
-                    });
-
-                    print("==========================");
-                    print("After Refresh Is Comming Back");
-                  },
-                  prefix: Row(
-                    mainAxisSize: MainAxisSize.min,
+            ),
+            
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Category & Time
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(FontAwesome.commenting_o, size: 16, color: textSecondaryColor),
-                      4.width,
-                      if (widget.newsData!.no_of_comments_text.validate(value: '0').splitBefore(' ') == 'No')
-                        CommentTextWidget(text: "Add Comments")
-                      else
-                        CommentTextWidget(text: widget.newsData!.no_of_comments_text.validate(value: '0').splitBefore(' ')),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          widget.newsData!.category.validate().isNotEmpty 
+                              ? widget.newsData!.category!.first.name.validate().toUpperCase() 
+                              : 'NEWS',
+                          style: boldTextStyle(size: 11, color: AppColors.primaryColor, letterSpacing: 1),
+                        ),
+                      ),
+                      Text(
+                        widget.newsData!.human_time_diff.validate().toUpperCase(),
+                        style: secondaryTextStyle(size: 11),
+                      ),
                     ],
                   ),
-                  text: '',
-                ),
-                TextIcon(
-                  prefix: Icon(FontAwesome.eye, size: 16, color: textSecondaryColor),
-                  text: widget.postView.validate().toString(),
-                  textStyle: secondaryTextStyle(),
-                ),
-              ],
-            ).paddingSymmetric(horizontal: 16),
-            8.height,
-            // HtmlWidget(postContent: widget.postContent).paddingSymmetric(horizontal: 8),
-            30.height,
-            Text('Authored by', style: secondaryTextStyle(letterSpacing: 1.2)).visible(widget.newsData!.post_author_name.validate().isNotEmpty).paddingSymmetric(horizontal: 16),
-            Container(
-              decoration: boxDecorationRoundedWithShadow(8, blurRadius: 0, backgroundColor: context.cardColor),
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.symmetric(vertical: 16),
-              alignment: Alignment.center,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  widget.newsData!.post_author_image.validate().isNotEmpty
-                      ? cachedImage(widget.newsData!.post_author_image.validate(), height: 76, width: 76, fit: BoxFit.cover).cornerRadiusWithClipRRect(35)
-                      : Image.asset('assets/profile.png', height: 76, width: 76, fit: BoxFit.cover).cornerRadiusWithClipRRect(38),
-                  8.height,
-                  Text('${widget.newsData!.post_author_name.validate()}', style: boldTextStyle(letterSpacing: 1.2)).visible(widget.newsData!.post_author_name.validate().isNotEmpty),
+                  16.height,
+                  
+                  // Title
+                  Text(
+                    parseHtmlString(widget.newsData!.post_title.validate()),
+                    style: boldTextStyle(size: 28, height: 1.2, letterSpacing: -0.5),
+                  ),
+                  20.height,
+                  
+                  // Author Info
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundColor: AppColors.primaryColor.withOpacity(0.1),
+                        child: widget.newsData!.post_author_image.validate().isNotEmpty
+                            ? cachedImage(widget.newsData!.post_author_image.validate(), height: 30, width: 30, fit: BoxFit.cover).cornerRadiusWithClipRRect(15)
+                            : const Icon(Icons.person, size: 18, color: AppColors.primaryColor),
+                      ),
+                      8.width,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.newsData!.post_author_name.validate(), style: boldTextStyle(size: 14)),
+                          Text(getArticleReadTime(context, widget.newsData!.post_content.validate()), style: secondaryTextStyle(size: 11)),
+                        ],
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () => likeDislike(widget.newsData!.iD.validate()),
+                        icon: Icon(isLike == true ? Icons.favorite : Icons.favorite_border, color: Colors.red),
+                      ),
+                      Text('${count.validate()}', style: primaryTextStyle(size: 16)),
+                    ],
+                  ),
+                  24.height,
+                  const Divider(),
+                  16.height,
+                  
+                  // Detailed Content
+                  HtmlWidget(postContent: widget.postContent),
+                  
+                  32.height,
+                  // Interaction Stats
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextIcon(
+                        prefix: Icon(FontAwesome.eye, size: 14, color: textSecondaryColor),
+                        text: "${widget.postView.validate()} Views",
+                        textStyle: secondaryTextStyle(),
+                      ),
+                    ],
+                  ),
+                  
+                  // Related News Section
+                  if (widget.relatedNews.validate().isNotEmpty) ...[
+                    40.height,
+                    Text(
+                      appLocalization.translate('related_news'),
+                      style: boldTextStyle(size: 20),
+                    ),
+                    16.height,
+                    BreakingNewsListWidget(widget.relatedNews.validate()),
+                  ],
                 ],
               ),
-            ).visible(widget.newsData!.post_author_name.validate().isNotEmpty).paddingSymmetric(horizontal: 16),
-            AppButton(
-              text: appLocalization.translate('view_Comments'),
-              color: AppColors.redColor,
-              textStyle: boldTextStyle(color: white),
-              onTap: () async {
-                print("Detail Page Varien tTime view Comments");
-
-
-              await CommentListScreen(widget.newsData!.iD).launch(context);
-
-                setDynamicStatusBarColorDetail(milliseconds: 400);
-              },
-              width: context.width(),
-            ).paddingSymmetric(horizontal: 16).visible(widget.newsData!.comment_count.validate().isNotEmpty),
-            8.height,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
-                  margin: EdgeInsets.only(left: 16, top: 32, bottom: 8),
-                  decoration: BoxDecoration(color: AppColors.redColor, borderRadius: radius(defaultRadius)),
-                  child: Text(appLocalization.translate('related_news'), style: boldTextStyle(size: 12, color: Colors.white, letterSpacing: 1.5)),
-                ),
-                BreakingNewsListWidget(widget.relatedNews.validate()),
-              ],
-            ).visible(widget.relatedNews.validate().isNotEmpty),
+            ),
           ],
         ),
       ),

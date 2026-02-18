@@ -4,6 +4,8 @@ import '../provider/home_provider.dart';
 import '../utils/Common.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_images.dart';
+import '../utils/Constants.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../widget/custom_shimmer_container.dart';
 import '../widget/news_item_details_widget.dart';
 import '../widget/news_item_widget.dart';
@@ -43,11 +45,21 @@ class _CategoryDetailsViewScreenState extends State<CategoryDetailsViewScreen> {
             title: Image.asset(
               AppImages.appLogo,
               fit: BoxFit.fitHeight,
-              width: 180,
+              width: 80,
             ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  LiveStream().emit(switchLiveTvTab, true);
+                },
+                icon: Icon(Icons.live_tv, color: Colors.white, size: 26),
+                tooltip: "Live TV",
+              ),
+            ],
           ),
 
           body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Consumer<HomeProvider>(
                 builder: (context,homeProvider,child) {
                   return Padding(

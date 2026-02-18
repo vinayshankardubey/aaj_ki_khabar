@@ -5,6 +5,8 @@ import '../provider/home_provider.dart';
 import '../utils/Common.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_images.dart';
+import '../utils/Constants.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'category_details_view_screen.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -32,10 +34,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
             title: Image.asset(
               AppImages.appLogo,
               fit: BoxFit.fitHeight,
-              width: 180,
+              width: 80,
             ),
 
             actions: [
+              IconButton(
+                onPressed: () {
+                  LiveStream().emit(switchLiveTvTab, true);
+                },
+                icon: Icon(Icons.live_tv, color: Colors.white, size: 26),
+                tooltip: "Live TV",
+              ),
               IconButton(
                   onPressed: () {
                     setState(() {
@@ -50,6 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ],
           ),
           body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Consumer<HomeProvider>(
                 builder: (context, homeProvider, child) {
                   return Column(

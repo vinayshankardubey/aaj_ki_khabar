@@ -103,13 +103,13 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : Colors.white,
+      backgroundColor: AppColors.primaryColor,
       body: SizedBox(
         height: context.height(),
         width: context.width(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: Center(child: Image.asset(AppImages.appLogo,height: 60,)),
+          child: Center(child: Image.asset(AppImages.appLogo, height: 180)),
         )
       ),
     );

@@ -76,16 +76,14 @@ class WeekNewsItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.blue.shade50,
-                        borderRadius: BorderRadius.circular(5),
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                      child: Center(
-                        child:Text(
-                          post["_embedded"]["wp:term"][0][0]["name"]?? "",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      child: Text(
+                        "${post["_embedded"]["wp:term"][0][0]["name"] ?? ""}".toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold, fontSize: 11, letterSpacing: 1.1),
                       ),
                     ),
                     SizedBox(width: 10.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:live_uttarpradesh/provider/home_provider.dart';
 import 'package:live_uttarpradesh/utils/Constants.dart';
 import 'package:live_uttarpradesh/widget/custom_shimmer_container.dart';
@@ -53,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        setDynamicStatusBarColor(color: AppColors.redColor);
         return true;
       },
       child: Scaffold(
@@ -61,10 +61,18 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Image.asset(
               AppImages.appLogo,
               fit: BoxFit.fitHeight,
-              width: 180,
+              width: 80,
             ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  LiveStream().emit(switchLiveTvTab, true);
+                },
+                icon: Icon(Icons.live_tv, color: Colors.white),
+                tooltip: "Live TV",
+              ),
+            ],
           ),
-
           body: RefreshIndicator(
             color: AppColors.grayColor,
             onRefresh: () async {
@@ -72,12 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   .of<HomeProvider>(context, listen: false)
                   .fetchPostsData();
             },
-            child: ScrollConfiguration(
-              behavior: const MaterialScrollBehavior().copyWith(
-                  overscroll: false),
-              child: SingleChildScrollView(
-                child: Consumer<HomeProvider>(
-                    builder: (context, homeProvider, child) {
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
                       return Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
@@ -112,10 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
 
                                     SingleChildScrollView(
+                                      physics: const BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
                                         children: List.generate(
-                                            homeProvider.categoryData.length, (
+                                          homeProvider.categoryData.length, (
                                             index) {
                                           return InkWell(
                                               onTap: (){
@@ -293,151 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ) : SizedBox(),
 
-                                //Most Popular Section
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
-                                  children: [
-                                    Text("Most Popular", style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold),),
-                                    Icon(Icons.keyboard_double_arrow_right,)
-                                  ],
-                                ),
-                                SizedBox(height: 10,),
-                                SizedBox(
-                                  height: 250,
-                                  child: PageView.builder(
-                                      controller: pageController,
-                                      itemCount: homeProvider.otherStateData
-                                          .length > 5 ? 5 : homeProvider
-                                          .otherStateData.length,
-                                      onPageChanged: (index) {
-                                        setState(() {
-                                          currentIndex = index;
-                                        });
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NewsItemDetailsWidget(
-                                                          postData: homeProvider
-                                                              .otherStateData,
-                                                          index: index,
-                                                        )));
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(right: 10),
-                                            child: TrendingNewsWidget(
-                                                index: index,
-                                                postData: homeProvider
-                                                    .otherStateData),
-                                          ),
-                                        );
-                                      }
-                                  ),
-                                ),
-                                SizedBox(height: 5,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(
-                                      homeProvider.otherStateData.length > 5
-                                          ? 5
-                                          : homeProvider.otherStateData
-                                          .length, (index) {
-                                    return AnimatedContainer(
-                                      duration: const Duration(
-                                          milliseconds: 300),
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 4),
-                                      width: currentIndex == index ? 20 : 12,
-                                      height: currentIndex == index ? 10 : 8,
-                                      decoration: BoxDecoration(
-                                        color: currentIndex == index ? AppColors
-                                            .redColor : Colors.grey,
-                                        borderRadius: BorderRadius.circular(20),
-                                        shape: BoxShape.rectangle,
-                                      ),
-                                    );
-                                  }),
-                                ),
-
-                                // Other State Section
-                                Text("Other State", style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),),
-                                SizedBox(height: 10,),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: homeProvider.otherStateData
-                                        .length > 5 ? 4 : homeProvider
-                                        .otherStateData.length,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index1) {
-                                      int index = index1;
-                                      if (homeProvider.postsData.length > 5) {
-                                        index = index1 + 5;
-                                      } else {
-                                        index = index1;
-                                      }
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      NewsItemDetailsWidget(
-                                                        postData: homeProvider
-                                                            .otherStateData,
-                                                        index: index,
-                                                      )
-                                              )
-                                          );
-                                        },
-                                        child: NewsItemWidget(
-                                          postData: homeProvider.otherStateData,
-                                          index: index,
-                                        ),
-                                      );
-                                    }),
-
-
-                                // International  Section
-                                Text("International", style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),),
-                                SizedBox(height: 10,),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: homeProvider.internationalData
-                                        .length > 5 ? 5 : homeProvider
-                                        .internationalData.length,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      print("length is ${homeProvider
-                                          .internationalData.length}");
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      NewsItemDetailsWidget(
-                                                        postData: homeProvider
-                                                            .internationalData,
-                                                        index: index,
-                                                      )));
-                                        },
-                                        child: NewsItemWidget(
-                                          postData: homeProvider
-                                              .internationalData,
-                                          index: index,
-                                        ),
-                                      );
-                                    }),
-
-                                // Section
+                            
+                             
                                 SizedBox(height: 10,),
                                 ListView.builder(
                                   itemCount: homeProvider.internationalData
@@ -533,43 +397,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       );
-                    }
+                    },
+                  ),
                 ),
               ),
-            ),
-          )
-      ),
-    );
+          ),
+      );
   }
 
   Widget footerWidget() {
     return Container(
-      color: AppColors.redColor,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: [
-          Image.asset(AppImages.appLogo,),
-          SizedBox(height: 20,),
-          Text(footerText,
-            softWrap: true,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: AppColors.whiteColor,
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-            ),
-          ),
-          SizedBox(height: 40,),
-          Text(copyrightReserved,
-            softWrap: true,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: AppColors.whiteColor,
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-            ),
-          )
-
+          Image.asset(AppImages.appLogo,)
         ],
       ),
     );

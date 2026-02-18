@@ -131,6 +131,8 @@ abstract class _AppStore with Store {
     isDarkMode = aIsDarkMode;
 
     if (isDarkMode) {
+      await setValue(THEME_MODE_INDEX, ThemeModeDark);
+
       textPrimaryColorGlobal = Colors.white;
       textSecondaryColorGlobal = textSecondaryColor;
 
@@ -138,6 +140,8 @@ abstract class _AppStore with Store {
       appButtonBackgroundColorGlobal = AppColors.appButtonColorDark;
       shadowColorGlobal = Colors.white12;
     } else {
+      await setValue(THEME_MODE_INDEX, ThemeModeLight);
+
       textPrimaryColorGlobal = textPrimaryColor;
       textSecondaryColorGlobal = textSecondaryColor;
 

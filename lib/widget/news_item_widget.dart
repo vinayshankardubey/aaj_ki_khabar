@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:live_uttarpradesh/utils/app_images.dart';
+import 'package:live_uttarpradesh/utils/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 import '../utils/html_coversion.dart';
 
@@ -109,16 +110,14 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(5),
+                color: AppColors.primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(4),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Center(
-                child: Text(
-                  post["_embedded"]["wp:term"][0][0]["name"]?? "",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              child: Text(
+                "${post["_embedded"]["wp:term"][0][0]["name"] ?? ""}".toUpperCase(),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold, fontSize: 12, letterSpacing: 1.1),
               ),
             ),
             SizedBox(width: 10.0,),

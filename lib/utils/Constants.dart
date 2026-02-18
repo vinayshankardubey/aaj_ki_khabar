@@ -1,12 +1,13 @@
 import 'package:nb_utils/nb_utils.dart';
 
-const mAppName = 'Live Uttar Pradesh';
+const mAppName = 'Aaj Ki Khabar';
 
 //region URLs & Keys
 /// Note: /wp-json/ is required after your domain. Ex if your domain is www.abc.com then ${mBaseUrl} will be  https://www.abc.com/wp-json/
 
-const appUrl = "https://liveuttarpradesh.com/";
-const mBaseUrl = 'https://liveuttarpradesh.com/wp-json/wp/v2/';
+const appUrl = "https://aajkikhabar.com/";
+const mBaseUrl = 'https://aajkikhabar.com/wp-json/wp/v2/';
+const mLiveTvStreamUrl = 'https://stream.ottlive.co.in/aajkikhabar/index.m3u8';
 
 const supportURL = 'https://support.meetmighty.com/';
 const codeCanyonURL = 'https://codecanyon.net/item/mightynews-flutter-news-app-with-wordpress-backend/29648579?s_rank=3';
@@ -31,6 +32,9 @@ const appStoreBaseUrl = 'https://www.apple.com/app-store/';
 const checkMyTopics = 'checkMyTopics';
 const refreshBookmark = 'refreshBookmark';
 const tokenStream = 'tokenStream';
+const isFullScreenApp = 'isFullScreenApp';
+const switchLiveTvTab = 'switchLiveTvTab';
+const playPauseLiveTv = 'playPauseLiveTv';
 
 const authorName = "MeetMighty";
 const aboutUsText = '$mAppName app is a smart Flutter news app. It contains Flutter source code and to build your news application with most useful'
@@ -135,5 +139,5 @@ const FILTER = 'filter';
 const FILTER_FEATURE = 'feature';
 
 
-const footerText = "Live UttarPradesh.Com is initiative of 'Media Matrix', A organisation devoted to latest news and information sector.";
-const copyrightReserved = "© Copyright 2018 Live Uttar Pradesh";
+const footerText = "Khelkood is initiative of 'Media Matrix', A organisation devoted to latest news and information sector.";
+const copyrightReserved = "";

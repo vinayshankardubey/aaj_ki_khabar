@@ -1,142 +1,98 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_html/flutter_html.dart';
-// import '../components/PdfViewWidget.dart';
-// import '../components/TableViewWidget.dart';
-// import '../components/VimeoEmbedWidget.dart';
-// import '../components/YouTubeEmbedWidget.dart';
-// import '../../../utils/extension.dart';
-// import 'package:nb_utils/nb_utils.dart';
-// import 'AppWidgets.dart';
-// import 'TweetWidget.dart';
-//
-// class HtmlWidget extends StatelessWidget {
-//   final String? postContent;
-//   final Color? color;
-//
-//   HtmlWidget({this.postContent, this.color});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Html(
-//       data: postContent!,
-//       onLinkTap: (s, _, __, ___) async {
-//         if (s!.split('/').last.contains('.pdf')) {
-//           PdfViewWidget(pdfUrl: s).launch(context);
-//         } else {
-//           launchUrls(s, forceWebView: false);
-//         }
-//       },
-//       onImageTap: (s, _, __, ___) {
-//         openPhotoViewer(context, Image.network(s!).image);
-//       },
-//       style: {
-//         "table": Style(backgroundColor: color ?? transparentColor),
-//         "tr": Style(border: Border(bottom: BorderSide(color: Colors.black45.withOpacity(0.5)))),
-//         "th": Style(padding: EdgeInsets.all(6), backgroundColor: Colors.black45.withOpacity(0.5)),
-//         "td": Style(padding: EdgeInsets.all(6), alignment: Alignment.center),
-//         'embed': Style(color: color ?? transparentColor, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'strong': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'a': Style(color: color ?? Colors.blue, fontWeight: FontWeight.bold, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'div': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'figure': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble()), padding: EdgeInsets.zero, margin: EdgeInsets.zero),
-//         'h1': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'h2': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'h3': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'h4': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'h5': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'h6': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'ol': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'ul': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'strike': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'u': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'b': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'i': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'hr': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'header': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'code': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'data': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'body': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'big': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'blockquote': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'audio': Style(color: color ?? textPrimaryColorGlobal, fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'img': Style(width: context.width(), padding: EdgeInsets.only(bottom: 8), fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble())),
-//         'li': Style(
-//           color: color ?? textPrimaryColorGlobal,
-//           fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble()),
-//           listStyleType: ListStyleType.DISC,
-//           listStylePosition: ListStylePosition.OUTSIDE,
-//         ),
-//       },
-//       customRender: {
-//         "embed": (RenderContext renderContext, Widget child) {
-//           var videoLink = renderContext.parser.htmlData.text.splitBetween('<embed>', '</embed');
-//           if (videoLink.contains('youtu.be')) {
-//             return YouTubeEmbedWidget(videoLink.replaceAll('<br>', '').toYouTubeId());
-//           } else if (videoLink.contains('vimeo')) {
-//             return VimeoEmbedWidget(videoLink.replaceAll('<br>', ''));
-//           }
-//           else {
-//             return child;
-//           }
-//         },
-//         "figure": (RenderContext renderContext, Widget child) {
-//           log("=======================");
-//           log(renderContext.tree.element!.innerHtml);
-//           if (renderContext.tree.element!.innerHtml.contains('youtu.be')) {
-//             log("${renderContext.tree.element!.innerHtml.splitBetween('<div class="wp-block-embed__wrapper">', "</div>")}");
-//             return YouTubeEmbedWidget(renderContext.tree.element!.innerHtml.splitBetween('<div class="wp-block-embed__wrapper">', "</div>").replaceAll('<br>', '').toYouTubeId());
-//           } else if (renderContext.tree.element!.innerHtml.contains('vimeo')) {
-//             return VimeoEmbedWidget(renderContext.tree.element!.innerHtml.splitBetween('<div class="wp-block-embed__wrapper">', "</div>").replaceAll('<br>', '').splitAfter('com/'));
-//           } else if (renderContext.tree.element!.innerHtml.contains('audio')) {
-//             return Container(
-//                 width: context.width(),
-//
-//                 child: Html(data:  renderContext.tree.element!.innerHtml,).center());
-//             // return AudioPostWidget(postString: renderContext.tree.element!.innerHtml);
-//           } else {
-//             return child;
-//             // return child;
-//           }
-//         },
-//         "iframe": (RenderContext renderContext, Widget child) {
-//           return YouTubeEmbedWidget(renderContext.tree.attributes['src']!.toYouTubeId());
-//         },
-//         "img": (RenderContext renderContext, Widget child) {
-//           String img = '';
-//           if (renderContext.tree.attributes.containsKey('src')) {
-//             img = renderContext.tree.attributes['src']!;
-//           } else if (renderContext.tree.attributes.containsKey('data-src')) {
-//             img = renderContext.tree.attributes['data-src']!;
-//           }
-//           return cachedImage(img).cornerRadiusWithClipRRect(defaultRadius).onTap(() {
-//             openPhotoViewer(context, NetworkImage(img));
-//           });
-//         },
-//         "blockquote": (RenderContext renderContext, Widget child) {
-//           print("HTML WIDGET CALLING" + renderContext.tree.element!.outerHtml.toString());
-//           return TweetWebView(tweetUrl: renderContext.tree.element!.outerHtml);
-//         },
-//         "table": (RenderContext renderContext, Widget child) {
-//           return Column(
-//             children: [
-//               Align(
-//                 alignment: Alignment.topRight,
-//                 child: IconButton(
-//                   icon: Icon(Icons.open_in_full_rounded),
-//                   onPressed: () async {
-//                     await TableViewWidget(renderContext).launch(context);
-//                     setOrientationPortrait();
-//                   },
-//                 ),
-//               ),
-//               SingleChildScrollView(
-//                 scrollDirection: Axis.horizontal,
-//                 child: (renderContext.tree as TableSectionLayoutElement).toWidget(renderContext),
-//               ),
-//             ],
-//           );
-//         },
-//       },
-//     );
-//   }
-// }
+import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import '../components/PdfViewWidget.dart';
+import '../components/VimeoEmbedWidget.dart';
+import '../components/YouTubeEmbedWidget.dart';
+import '../../../utils/extension.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'AppWidgets.dart';
+import 'TweetWidget.dart';
+
+class HtmlWidget extends StatelessWidget {
+  final String? postContent;
+  final Color? color;
+
+  HtmlWidget({this.postContent, this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Html(
+      data: postContent!,
+      onLinkTap: (url, attributes, element) async {
+        if (url != null) {
+          if (url.split('/').last.contains('.pdf')) {
+            PdfViewWidget(pdfUrl: url).launch(context);
+          } else {
+            launchUrls(url, forceWebView: false);
+          }
+        }
+      },
+      style: {
+        "table": Style(backgroundColor: color ?? transparentColor),
+        "tr": Style(border: const Border(bottom: BorderSide(color: Colors.black45))),
+        "th": Style(padding: HtmlPaddings.all(6), backgroundColor: Colors.black45.withOpacity(0.5)),
+        "td": Style(padding: HtmlPaddings.all(6), alignment: Alignment.center),
+        'embed': Style(
+          color: color ?? transparentColor,
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.bold,
+          fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble()),
+        ),
+        'strong': Style(
+          color: color ?? textPrimaryColorGlobal,
+          fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble()),
+        ),
+        'a': Style(
+          color: color ?? Colors.blue,
+          fontWeight: FontWeight.bold,
+          fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble()),
+        ),
+        'body': Style(
+          color: color ?? textPrimaryColorGlobal,
+          fontSize: FontSize(getIntAsync(FONT_SIZE_PREF, defaultValue: 16).toDouble()),
+          margin: Margins.zero,
+          padding: HtmlPaddings.zero,
+        ),
+      },
+      extensions: [
+        TagExtension(
+          tagsToExtend: {"iframe"},
+          builder: (extensionContext) {
+            final src = extensionContext.attributes['src'];
+            if (src != null && src.contains('youtube.com')) {
+              return YouTubeEmbedWidget(src.toYouTubeId());
+            }
+            if (src != null && src.contains('vimeo.com')) {
+              return VimeoEmbedWidget(src.split('/').last);
+            }
+            return Container();
+          },
+        ),
+        TagExtension(
+          tagsToExtend: {"blockquote"},
+          builder: (extensionContext) {
+            return TweetWebView(tweetUrl: extensionContext.innerHtml);
+          },
+        ),
+        TagExtension(
+          tagsToExtend: {"img"},
+          builder: (extensionContext) {
+            String imgUrl = extensionContext.attributes['src'] ?? "";
+            if (imgUrl.isEmpty) {
+              imgUrl = extensionContext.attributes['data-src'] ?? "";
+            }
+            if (imgUrl.isNotEmpty) {
+              return InkWell(
+                onTap: () {
+                  openPhotoViewer(context, NetworkImage(imgUrl));
+                },
+                child: cachedImage(imgUrl, width: context.width(), fit: BoxFit.cover).cornerRadiusWithClipRRect(defaultRadius),
+              );
+            }
+            return Container();
+          },
+        ),
+      ],
+    );
+  }
+}

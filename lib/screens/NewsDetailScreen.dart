@@ -199,7 +199,7 @@ class NewsDetailScreenState extends State<NewsDetailScreen> {
     }
 
     return SafeArea(
-      top: !isIOS ? true : false,
+      top: false,
       child: Scaffold(
         appBar: (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 1 && widget.newsData != null)
             ? appBarWidget(

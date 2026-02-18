@@ -12,6 +12,7 @@ import '../screens/ProfileFragment.dart';
 import '../../../utils/extension.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import '../widget/custom_icon_button.dart';
 import 'live_tv_view.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -23,7 +24,8 @@ class DashboardScreen extends StatefulWidget {
 
 class DashboardScreenState extends State<DashboardScreen> {
   List<Widget> widgets = [];
-  int currentIndex = 0;
+  int currentIndex = 1;
+  bool isFullScreen = false;
 
   DateTime? currentBackPressTime;
 
@@ -34,7 +36,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   }
 
   void init() async {
-    setDynamicStatusBarColor(color: AppColors.redColor);
+    setDynamicStatusBarColor(color: Colors.transparent);
     setValue(banner, mDisplayBanner);
     setValue(interstitial, mDisplayInterstitial);
     setValue(reward, mDisplayReward);
@@ -49,11 +51,19 @@ class DashboardScreenState extends State<DashboardScreen> {
     setState(() {});
 
     LiveStream().on(checkMyTopics, (v) {
-      currentIndex = 0;
+      currentIndex = 1;
       setState(() {});
     });
     LiveStream().on(tokenStream, (v) {
       LoginScreen(isNewTask: false).launch(context);
+    });
+    LiveStream().on(isFullScreenApp, (v) {
+      isFullScreen = v as bool;
+      setState(() {});
+    });
+    LiveStream().on(switchLiveTvTab, (v) {
+      currentIndex = 1;
+      setState(() {});
     });
 
     await Future.delayed(Duration(milliseconds: 400));
@@ -101,6 +111,8 @@ class DashboardScreenState extends State<DashboardScreen> {
     super.dispose();
     LiveStream().dispose(checkMyTopics);
     LiveStream().dispose(tokenStream);
+    LiveStream().dispose(isFullScreenApp);
+    LiveStream().dispose(switchLiveTvTab);
 
     window.onPlatformBrightnessChanged = null;
   }
@@ -110,22 +122,34 @@ class DashboardScreenState extends State<DashboardScreen> {
     if (mounted) super.setState(fn);
   }
 
+  void _onTabChanged(int index) {
+    if (currentIndex == index) return;
+    currentIndex = index;
+    if (index == 1) {
+      LiveStream().emit(playPauseLiveTv, true);
+    } else {
+      LiveStream().emit(playPauseLiveTv, false);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       child: WillPopScope(
         onWillPop: () async {
-          setDynamicStatusBarColor(color: AppColors.redColor);
+          setDynamicStatusBarColor(color: Colors.transparent);
 
           DateTime now = DateTime.now();
-          if (currentIndex == 0) {
+          if (currentIndex == 1) {
             if (currentBackPressTime == null || now.difference(currentBackPressTime!) > 2.seconds) {
               currentBackPressTime = now;
               toast(AppLocalizations.of(context)!.translate('exit_app'));
               return Future.value(false);
             }
           } else {
-            currentIndex = 0;
+            currentIndex = 1;
             setState(() {});
             return Future.value(false);
           }
@@ -136,74 +160,82 @@ class DashboardScreenState extends State<DashboardScreen> {
             children: widgets,
             index: currentIndex,
           ),
-          bottomNavigationBar: Observer(
-            builder: (_) => BottomNavigationBar(
-              backgroundColor: AppColors.backgroundColor,
-              currentIndex: currentIndex,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: context.theme.iconTheme.color,size: 28,),
-                  label: 'Home',
-                  activeIcon: Icon(Icons.home_outlined, color: AppColors.redColor,size: 28),
-                ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Icons.dashboard_outlined, color: context.theme.iconTheme.color),
-                //   label: 'Suggested For You',
-                //   activeIcon: Icon(Icons.dashboard_outlined, color: colorPrimary),
-                // ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.live_tv, color: context.theme.iconTheme.color,size: 28,),
-                  label: 'Live Tv',
-                  activeIcon: Icon(Icons.live_tv_outlined, color: AppColors.redColor,size: 28,),
-                ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Ionicons.ios_search, color: context.theme.iconTheme.color),
-                //   label: 'Search News',
-                //   activeIcon: Icon(Ionicons.ios_search, color: colorPrimary),
-                // ),
-                BottomNavigationBarItem(
-                  icon: appStore.isLoggedIn
-                      ? cachedImage(appStore.userProfileImage, height: 24, width: 24, fit: BoxFit.cover).cornerRadiusWithClipRRect(15)
-                      : Icon(Icons.person, color: context.theme.iconTheme.color,size: 28,),
-                  label: 'Profile',
-                  activeIcon: appStore.isLoggedIn
-                      ? Container(
-                          decoration: BoxDecoration(border: Border.all(color: AppColors.grayColor), shape: BoxShape.circle),
-                          child: cachedImage(
-                            appStore.userProfileImage,
-                            height: 24,
-                            width: 24,
-                            fit: BoxFit.cover,
-                          ).cornerRadiusWithClipRRect(15))
-                      : Icon(Icons.person, color: AppColors.redColor,size: 28,),
-                ),
-              ],
-              type: BottomNavigationBarType.fixed,
-              showUnselectedLabels: false,
-              showSelectedLabels: false,
-              onTap: (i) async {
-                // if (i == 1) {
-                //   if (!appStore.isLoggedIn) {
-                //     LoginScreen().launch(context);
-                //   } else if (appStore.myTopics.isEmpty && i == 1) {
-                //     await ChooseTopicScreen().launch(context);
-                //
-                //     if (appStore.myTopics.isNotEmpty) {
-                //       currentIndex = 1;
-                //     }
-                //   } else {
-                //     currentIndex = i;
-                //   }
-                // } else {
-                //   currentIndex = i;
-                // }
-                currentIndex = i;
-
-                setState(() {});
-              },
+          bottomNavigationBar: isFullScreen ? null : Observer(
+            builder: (_) => Container(
+              height: 70 + (context.navigationBarHeight > 0 ? 10 : 0),
+              padding: EdgeInsets.only(bottom: context.navigationBarHeight > 0 ? 15 : 5),
+              decoration: BoxDecoration(
+                color: context.scaffoldBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                   CustomIconButton(
+                    activeIconData: Icons.home,
+                    inactiveIconData: Icons.home_outlined,
+                    isActive: currentIndex == 0,
+                    onTap: () => _onTabChanged(0),
+                    activeColor: AppColors.redColor,
+                    inactiveColor: Colors.grey,
+                  ),
+                   GestureDetector(
+                    onTap: () => _onTabChanged(1),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: currentIndex == 1 ? Border.all(color: AppColors.redColor, width: 2) : null,
+                      ),
+                      child: CustomIconButton(
+                        activeIconData: Icons.video_library,
+                        inactiveIconData: Icons.video_library_outlined,
+                        isActive: currentIndex == 1,
+                        onTap: () => _onTabChanged(1),
+                        activeColor: AppColors.redColor,
+                        inactiveColor: Colors.grey,
+                        activeSize: 32,
+                      ),
+                    ),
+                  ),
+                  _buildProfileTab(),
+                ],
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildProfileTab() {
+    bool isActive = currentIndex == 2;
+    return GestureDetector(
+      onTap: () => _onTabChanged(2),
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        child: appStore.isLoggedIn
+            ? cachedImage(
+                appStore.userProfileImage,
+                height: isActive ? 34 : 28,
+                width: isActive ? 34 : 28,
+                fit: BoxFit.cover,
+              ).cornerRadiusWithClipRRect(20)
+             : CustomIconButton(
+                activeIconData: Icons.person,
+                inactiveIconData: Icons.person_outline,
+                isActive: isActive,
+                onTap: () => _onTabChanged(2),
+                activeColor: AppColors.redColor,
+                inactiveColor: Colors.grey,
+              ),
       ),
     );
   }

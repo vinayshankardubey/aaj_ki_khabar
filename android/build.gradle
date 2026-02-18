@@ -1,5 +1,5 @@
 allprojects {
-    ext.kotlin_version = '2.0.21'
+    ext.kotlin_version = '2.1.0'
     repositories {
         google()
         mavenCentral()
@@ -11,9 +11,21 @@ allprojects {
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-    afterEvaluate{
-        android{
-            compileSdkVersion 34
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            android {
+                compileSdkVersion 34
+                if (namespace == null || namespace.isEmpty()) {
+                    def manifest = file("${project.projectDir}/src/main/AndroidManifest.xml")
+                    if (manifest.exists()) {
+                        def manifestContent = manifest.text
+                        def packageMatch = manifestContent =~ /package="([^"]+)"/
+                        if (packageMatch) {
+                            namespace = packageMatch[0][1]
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ import '../screens/DashboardScreen.dart';
 import 'app_colors.dart';
 import 'Constants.dart';
 
-Color getAppPrimaryColor() => appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
+Color getAppPrimaryColor() => AppColors.primaryColor;
 
 String? titleFont() {
   return GoogleFonts.cormorantGaramond().fontFamily;
@@ -102,23 +102,11 @@ double getDashBoard2WidgetHeight() {
 }
 
 Color getAppBarWidgetBackGroundColor() {
-  if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 1) {
-    return appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
-  } else if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 2 || getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 3) {
-    return appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
-  } else {
-    return appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : AppColors.whiteColor;
-  }
+  return AppColors.primaryColor;
 }
 
 Color getAppBarWidgetTextColor() {
-  if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 1) {
-    return appStore.isDarkMode ? white : white;
-  } else if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 2 || getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 3) {
-    return appStore.isDarkMode ? white : black;
-  } else {
-    return appStore.isDarkMode ? white : black;
-  }
+  return white;
 }
 
 int getWidgetTwitterLine() {
@@ -130,55 +118,19 @@ int getWidgetTwitterLine() {
 }
 
 Future<void> setDynamicStatusBarColor({Color? color, int milliseconds = 100}) async {
-  if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 1) {
-    setStatusBarColor(color ?? getAppPrimaryColor() /*, statusBarIconBrightness: Brightness.light*/, delayInMilliSeconds: milliseconds);
-  } else if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 2 || getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) == 3) {
-    setStatusBarColor(color ?? (appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : white) /*, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark*/,
-        delayInMilliSeconds: milliseconds);
-  }
+  setStatusBarColor(color ?? AppColors.primaryColor, delayInMilliSeconds: milliseconds);
 }
 
 Future<void> setDynamicStatusBarColorDetail({int milliseconds = 100}) async {
-  if (getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage) != 1 && getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 1) {
-    setStatusBarColor(appStore.isDarkMode ? AppColors.scaffoldSecondaryDark : Colors.white /*, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark*/,
-        delayInMilliSeconds: milliseconds);
-  } else {
-    if (getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 2 || getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1) == 3) {
-      setStatusBarColor(Colors.transparent /*, statusBarIconBrightness: Brightness.light*/, delayInMilliSeconds: milliseconds);
-    } else {
-      setStatusBarColor(getAppPrimaryColor() /*, statusBarIconBrightness: Brightness.light*/, delayInMilliSeconds: milliseconds);
-    }
-  }
+  setStatusBarColor(AppColors.primaryColor, delayInMilliSeconds: milliseconds);
 }
 
 Brightness getSystemIconBrightness() {
-  int dashVariant = getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage);
-  int detailVariant = getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1);
-
-  if (dashVariant != 1 && detailVariant == 1) {
-    return appStore.isDarkMode ? Brightness.light : Brightness.dark;
-  } else {
-    if (detailVariant == 2 || detailVariant == 3) {
-      return Brightness.light;
-    } else {
-      return appStore.isDarkMode ? Brightness.dark : Brightness.light;
-    }
-  }
+  return Brightness.light;
 }
 
 Brightness getSystemBrightness() {
-  int dashVariant = getIntAsync(DASHBOARD_PAGE_VARIANT, defaultValue: defaultDashboardPage);
-  int detailVariant = getIntAsync(DETAIL_PAGE_VARIANT, defaultValue: 1);
-
-  if (dashVariant != 1 && detailVariant == 1) {
-    return appStore.isDarkMode ? Brightness.dark : Brightness.light;
-  } else {
-    if (detailVariant == 2 || detailVariant == 3) {
-      return Brightness.dark;
-    } else {
-      return appStore.isDarkMode ? Brightness.light : Brightness.dark;
-    }
-  }
+  return Brightness.dark;
 }
 
 Future<FirebaseRemoteConfig> initializeRemoteConfig() async {
