@@ -342,8 +342,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 SizedBox(height: 10,),
 
-                                footerWidget()
-
                               ],
                             )
                                 :
@@ -403,17 +401,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
           ),
       );
-  }
-
-  Widget footerWidget() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Column(
-        children: [
-          Image.asset(AppImages.appLogo,)
-        ],
-      ),
-    );
   }
 
   Widget _buildCategoryChip({required String name}) {
