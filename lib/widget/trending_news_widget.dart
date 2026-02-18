@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/Common.dart' as HtmlConversion;
@@ -26,129 +27,124 @@ class _TrendingNewsWidgetState extends State<TrendingNewsWidget> {
   @override
   Widget build(BuildContext context) {
     final post = widget.postData[widget.index];
-    return Stack(
-      children: [
-
-        Container(
-            height: 250,
-            width: double.infinity,
+    return Container(
+      height: 280,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child:  post["_embedded"]["wp:featuredmedia"]!=null && post["_embedded"]["wp:featuredmedia"][0]["source_url"]!=null
-            ? CachedNetworkImage(
-            imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
-              width: double.infinity,
-              height: 250,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                  ),
+              borderRadius: BorderRadius.circular(20),
+              child: post["_embedded"]["wp:featuredmedia"] != null && post["_embedded"]["wp:featuredmedia"][0]["source_url"] != null
+                  ? CachedNetworkImage(
+                      imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(color: Colors.white),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: AppColors.primaryColor.withOpacity(0.05),
+                        child: Center(child: Image.asset(AppImages.appLogo, width: 100)),
+                      ),
+                    )
+                  : Container(
+                      color: AppColors.primaryColor.withOpacity(0.05),
+                      child: Center(child: Image.asset(AppImages.appLogo, width: 100)),
+                    ),
+            ),
+          ),
+
+          // Gradient Overlay
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.2),
+                    Colors.black.withOpacity(0.8),
+                  ],
                 ),
               ),
-              placeholder: (context, url) =>
-                  Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
-                      ),
-                      width: double.infinity,
-                    ),
-                  ),
-              errorWidget: (context, url, error) =>
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Image.asset(AppImages.appLogo),
-                  ),
-            )
-            : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Image.asset(AppImages.appLogo),
-            ),
-            )
-        ),
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColors.blackColor.withOpacity(.3)
-            )
-          ),
-        ),
-        Positioned(
-          top: 20,
-          right: 20,
-          left:20,
-          bottom: 0,
-          child: Text(
-            HtmlConversion.parseHtmlString(post["title"]["rendered"]),
-            maxLines: 3,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              height: 1.4,
             ),
           ),
-        ),
-        Positioned(
-          bottom: 50,
-          left: 0,
-          right: 0,
-          child: Divider(
-            color: Colors.grey,
-            thickness: 1,
-          ),
-        ),
-        // Positioned(
-        //   bottom: 10,
-        //   left: 10,
-        //   right: 10,
-        //   child: Row(
-        //     children: [
-        //       Container(
-        //         decoration: BoxDecoration(
-        //           color: Colors.blue.shade50,
-        //           borderRadius: BorderRadius.circular(5),
-        //         ),
-        //         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-        //         child: Center(
-        //           child: Text(
-        //             post["_embedded"]["wp:term"][0][0]["name"]?? "",
-        //             textAlign: TextAlign.center,
-        //             style: TextStyle(fontWeight: FontWeight.w500),
-        //           ),
-        //         ),
-        //       ),
-        //       SizedBox(width: 10.0,),
-        //       Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? "",style: TextStyle(color: Colors.white)),
-        //       SizedBox(width: 10.0,),
-        //       Text("by ${post["_embedded"]["author"][0]["name"]}",
-        //           style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white)),
-        //       Spacer(),
-        //       Icon(Icons.messenger_outline, color: Colors.white, size: 20),
-        //       SizedBox(width: 5.0,),
-        //       Padding(
-        //         padding: const EdgeInsets.only(bottom: 4.0),
-        //         child: Text("",
-        //           // post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
-        //           style: TextStyle(
-        //             fontWeight: FontWeight.w500,
-        //             color: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
 
-      ],
+          // Content
+          Positioned(
+            left: 20,
+            right: 20,
+            bottom: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.trending_up, color: Colors.white, size: 14),
+                      const SizedBox(width: 4),
+                      Text(
+                        "Trending".toUpperCase(),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10, letterSpacing: 1),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  HtmlConversion.parseHtmlString(post["title"]["rendered"]),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Text(
+                      "${post["_embedded"]["wp:term"]?[0]?[0]?["name"] ?? "News"}",
+                      style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 12, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(width: 10),
+                    Icon(Icons.circle, size: 4, color: Colors.white.withOpacity(0.5)),
+                    const SizedBox(width: 10),
+                    Text(
+                      DateFormat('dd MMM yyyy').format(DateTime.parse(post['date'])),
+                      style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

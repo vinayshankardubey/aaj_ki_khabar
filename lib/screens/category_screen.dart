@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../provider/home_provider.dart';
 import '../utils/Common.dart';
@@ -17,26 +19,21 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  bool isVisible = false;
-  TextEditingController searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         setDynamicStatusBarColor(color: AppColors.redColor);
         return true;
       },
       child: Scaffold(
-        backgroundColor: AppColors.backgroundColor,
+          backgroundColor: AppColors.backgroundColor,
           appBar: AppBar(
             title: Image.asset(
               AppImages.appLogo,
               fit: BoxFit.fitHeight,
               width: 80,
             ),
-
             actions: [
               IconButton(
                 onPressed: () {
@@ -45,17 +42,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 icon: Icon(Icons.live_tv, color: Colors.white, size: 26),
                 tooltip: "Live TV",
               ),
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isVisible = !isVisible;
-                    });
-                  },
-                  icon: Icon(Icons.search,
-                    color: Colors.white,
-                    size: 30,
-                  )
-              )
             ],
           ),
           body: SingleChildScrollView(
@@ -64,44 +50,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 builder: (context, homeProvider, child) {
                   return Column(
                       children: [
-                        Visibility(
-                          visible: isVisible,
-                          child: Container(
-                            color: AppColors.whiteColor,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-
-                                  Text("What are You Looking For?",
-                                    style: TextStyle(fontSize: 22.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white),),
-                                  SizedBox(height: 10,),
-                                  TextFormField(
-                                    onChanged: (String value) {
-
-                                    },
-                                    controller: searchController,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        hintText: "Search",
-                                        suffixIcon: Icon(
-                                          Icons.search, color: AppColors.greenColor,),
-                                        border: OutlineInputBorder(
-                                            borderSide: BorderSide.none
-                                        )
-                                    ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
                         Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: homeProvider.filterList.isNotEmpty
@@ -148,9 +96,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         Positioned.fill(
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(20),
-                                            child: Image.asset(
-                                              homeProvider.categoryImageList[index],
+                                            child: CachedNetworkImage(
+                                              imageUrl: homeProvider.filterList[index]["category_image"] ?? "",
                                               fit: BoxFit.cover,
+                                              placeholder: (context, url) => Shimmer.fromColors(
+                                                baseColor: Colors.grey.shade300,
+                                                highlightColor: Colors.grey.shade100,
+                                                child: Container(color: Colors.white),
+                                              ),
+                                              errorWidget: (context, url, error) => Padding(
+                                                padding: const EdgeInsets.all(30.0),
+                                                child: Image.asset(
+                                                  AppImages.appLogo,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),

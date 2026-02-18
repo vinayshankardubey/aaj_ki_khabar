@@ -13,4 +13,5 @@ class AppImages {
   static const String entertainmentImg = "${imageBasePath}entertainment.jpg";
   static const String gadgetsImg = "${imageBasePath}gadgets.jpg";
   static const String guruPurnimaImg = "${imageBasePath}guru_purnima.jpg";
+  static const String aiNewsBot = "${imageBasePath}ai_news_bot.png";
 }

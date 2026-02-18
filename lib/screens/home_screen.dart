@@ -15,6 +15,7 @@ import '../widget/news_item_widget.dart';
 import '../widget/week_news_item_widget.dart';
 import 'category_details_view_screen.dart';
 import 'category_screen.dart';
+import 'search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,6 +67,16 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(
                 onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SearchScreen()),
+                  );
+                },
+                icon: const Icon(Icons.search, color: Colors.white),
+                tooltip: "Search",
+              ),
+              IconButton(
+                onPressed: () {
                   LiveStream().emit(switchLiveTvTab, true);
                 },
                 icon: Icon(Icons.live_tv, color: Colors.white),
@@ -99,23 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 if(homeProvider.categoryData != null &&
                                     homeProvider.categoryData.isNotEmpty)
                                   ...[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .spaceBetween,
-                                      children: [
-                                        Text("News category", style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),),
-                                        InkWell(
-                                          onTap: (){
-                                            Navigator.push(context,MaterialPageRoute(builder: (context)=> CategoryScreen()));
-                                          },
-                                          child: Text("See all", style: TextStyle(
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.bold),),
-                                        ),
-                                      ],
-                                    ),
+                                    
 
                                     SingleChildScrollView(
                                       physics: const BouncingScrollPhysics(),
@@ -404,15 +399,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCategoryChip({required String name}) {
-    return Chip(
-      label: Text(
-        name,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
+    return Container(
+      margin: const EdgeInsets.only(right: 12, bottom: 10, top: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: context.primaryColor.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: context.primaryColor.withOpacity(0.1)),
       ),
-    ).paddingOnly(right: 8,bottom: 10,top: 10);
+      child: Text(
+        name,
+        style: boldTextStyle(color: context.primaryColor, size: 14),
+      ),
+    );
   }
 }

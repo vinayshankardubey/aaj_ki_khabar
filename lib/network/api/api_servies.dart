@@ -28,7 +28,7 @@ class ApiServices{
 
   static Future<List<dynamic>> fetchAllCategoryData()async{
     try{
-      final response = await http.get(Uri.parse('${mBaseUrl}categories'));
+      final response = await http.get(Uri.parse('${mBaseUrl}categories?per_page=100'));
       if (response.statusCode == 200) {
         // Decode and return the list of posts
         print(" category response is ${response.body}");
@@ -83,4 +83,20 @@ class ApiServices{
     }
   }
 
+  static Future<List<dynamic>> searchPosts({required String query}) async {
+    try {
+      final encodedQuery = Uri.encodeComponent(query);
+      final response = await http.get(
+        Uri.parse('${mBaseUrl}posts?_embed&search=$encodedQuery&per_page=20'),
+      );
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        return [];
+      }
+    } catch (ex) {
+      print("Search exception: $ex");
+      return [];
+    }
+  }
 }

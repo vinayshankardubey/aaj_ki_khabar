@@ -17,10 +17,10 @@ class AppTheme {
       secondary: AppColors.secondaryColor,
     ),
     scaffoldBackgroundColor: AppColors.whiteColor,
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: GoogleFonts.mukta().fontFamily,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: AppColors.whiteColor),
     iconTheme: IconThemeData(color: AppColors.scaffoldSecondaryDark),
-    textTheme: GoogleFonts.robotoTextTheme().apply(
+    textTheme: GoogleFonts.muktaTextTheme().apply(
       displayColor: AppColors.textColor,
       bodyColor: AppColors.textColor,
     ),
@@ -61,10 +61,10 @@ class AppTheme {
       secondary: AppColors.secondaryColor,
     ),
     scaffoldBackgroundColor: AppColors.scaffoldColorDark,
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: GoogleFonts.mukta().fontFamily,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: AppColors.scaffoldSecondaryDark),
     iconTheme: IconThemeData(color: AppColors.whiteColor),
-    textTheme: GoogleFonts.robotoTextTheme(ThemeData.dark().textTheme).apply(
+    textTheme: GoogleFonts.muktaTextTheme(ThemeData.dark().textTheme).apply(
       displayColor: AppColors.whiteColor,
       bodyColor: Colors.white70,
     ),

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:live_uttarpradesh/utils/app_images.dart';
 import 'package:live_uttarpradesh/utils/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../utils/html_coversion.dart';
 
 class NewsItemWidget extends StatefulWidget {
@@ -26,121 +27,133 @@ class _NewsItemWidgetState extends State<NewsItemWidget> {
   Widget build(BuildContext context) {
     final post = widget.postData[widget.index];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Featured Image with shimmer
-        SizedBox(
-          height: 200,
-          width: double.infinity,
-          child: post["_embedded"]["wp:featuredmedia"]!=null && post["_embedded"]["wp:featuredmedia"][0]["source_url"]!=null
-          ? CachedNetworkImage(
-            imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
-            width: double.infinity,
-            height: 250,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            placeholder: (context, url) =>
-            Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade100,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-                width: double.infinity,
-              ),
-            ),
-            errorWidget: (context, url, error) =>
-             Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 20),
-               child: Image.asset(AppImages.appLogo),
-             ),
-          )
-          : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Image.asset(AppImages.appLogo),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      decoration: BoxDecoration(
+        color: context.cardColor,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
           ),
-        ),
-
-        const SizedBox(height: 20),
-
-        // Title
-        Text(
-          HtmlConversion.parseHtmlString(post["title"]["rendered"]),
-          maxLines: 3,
-          softWrap: true,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w500,
-            height: 1,
-          ),
-        ),
-
-        const SizedBox(height: 15),
-
-        // Description
-        Text(
-          HtmlConversion.extractReadableText(post["content"]["rendered"]),
-          maxLines: 5,
-          softWrap: true,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 15.5,
-            height: 1.2,
-          ),
-        ),
-
-        const SizedBox(height: 15),
-
-        const Divider(height: 1, color: Colors.grey, thickness: 1),
-        const SizedBox(height: 15),
-
-        // Bottom info row
-        Row(
-
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              child: Text(
-                "${post["_embedded"]["wp:term"][0][0]["name"] ?? ""}".toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold, fontSize: 12, letterSpacing: 1.1),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Featured Image
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            child: SizedBox(
+              height: 220,
+              width: double.infinity,
+              child: Hero(
+                tag: "news_image_${post['id']}",
+                child: post["_embedded"]["wp:featuredmedia"] != null && post["_embedded"]["wp:featuredmedia"][0]["source_url"] != null
+                    ? CachedNetworkImage(
+                        imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Container(color: Colors.white),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          color: AppColors.primaryColor.withOpacity(0.05),
+                          child: Center(child: Image.asset(AppImages.appLogo, width: 100)),
+                        ),
+                      )
+                    : Container(
+                        color: AppColors.primaryColor.withOpacity(0.05),
+                        child: Center(child: Image.asset(AppImages.appLogo, width: 100)),
+                      ),
               ),
             ),
-            SizedBox(width: 10.0,),
-            Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? ""),
-            SizedBox(width: 10.0,),
-            Text("by ${post["_embedded"]["author"][0]["name"]}", style: TextStyle(fontWeight: FontWeight.w500)),
-            Spacer(),
-            Icon(Icons.messenger_outline, size: 20),
-            SizedBox(width: 5.0,),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text( "",
-                // post["yoast_head_json"]['schema']["@graph"][0]["commentCount"]?? "0",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
+          ),
 
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Category & Date Row
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      child: Text(
+                        "${post["_embedded"]["wp:term"]?[0]?[0]?["name"] ?? "News"}".toUpperCase(),
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 10,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(Icons.access_time, size: 14, color: context.iconColor.withOpacity(0.5)),
+                    const SizedBox(width: 4),
+                    Text(
+                      DateFormat('dd MMM yyyy').format(DateTime.parse(post['date'])),
+                      style: secondaryTextStyle(size: 12),
+                    ),
+                  ],
                 ),
-              ),
+                const SizedBox(height: 12),
+
+                // Title
+                Text(
+                  HtmlConversion.parseHtmlString(post["title"]["rendered"]),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: boldTextStyle(size: 20, height: 1.2),
+                ),
+                const SizedBox(height: 8),
+
+                // Description
+                Text(
+                  HtmlConversion.extractReadableText(post["content"]["rendered"]),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: secondaryTextStyle(size: 14, height: 1.4),
+                ),
+                const SizedBox(height: 16),
+
+
+                const SizedBox(height: 12),
+
+                // Author Info
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 12,
+                      backgroundColor: AppColors.primaryColor.withOpacity(0.1),
+                      child: Icon(Icons.person, size: 14, color: AppColors.primaryColor),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        "By ${post["_embedded"]["author"]?[0]["name"] ?? "Admin"}",
+                        style: boldTextStyle(size: 13),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Icon(Icons.arrow_forward, size: 16, color: AppColors.primaryColor),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
-        const SizedBox(height: 15),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

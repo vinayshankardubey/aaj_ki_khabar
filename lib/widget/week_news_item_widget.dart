@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:nb_utils/nb_utils.dart';
+
 import '../utils/app_colors.dart';
 import '../utils/Common.dart' as HtmlConversion;
 
@@ -18,60 +20,62 @@ class WeekNewsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final post = weekData[index];
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5,),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: context.cardColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-              height:100,
-              width: 100,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: CachedNetworkImage(
-                  imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
-                  width: 100,
-                  height: 100,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  placeholder: (context, url) =>
-                      Shimmer.fromColors(
+          // Image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(
+              height: 90,
+              width: 90,
+              child: post["_embedded"]["wp:featuredmedia"] != null && post["_embedded"]["wp:featuredmedia"][0]["source_url"] != null
+                  ? CachedNetworkImage(
+                      imageUrl: post["_embedded"]["wp:featuredmedia"][0]["source_url"],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Shimmer.fromColors(
                         baseColor: Colors.grey.shade300,
                         highlightColor: Colors.grey.shade100,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.white,
-                          ),
-                          width: 100,
-                        ),
+                        child: Container(color: Colors.white),
                       ),
-                  errorWidget: (context, url, error) =>
-                  const Icon(Icons.error),
-                ),
-              )
+                      errorWidget: (context, url, error) => Container(
+                        color: AppColors.primaryColor.withOpacity(0.05),
+                        child: Icon(Icons.error, size: 20, color: AppColors.primaryColor),
+                      ),
+                    )
+                  : Container(
+                      color: AppColors.primaryColor.withOpacity(0.05),
+                      child: Icon(Icons.image, size: 20, color: AppColors.primaryColor),
+                    ),
+            ),
           ),
-          SizedBox(width: 10),
-          Flexible(
+          const SizedBox(width: 12),
+
+          // Content
+          Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   HtmlConversion.parseHtmlString(post["title"]["rendered"]),
-                  maxLines: 3,
-                  softWrap: true,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    height: 1,
-                  ),
+                  style: boldTextStyle(size: 16, height: 1.2),
                 ),
-                SizedBox(height: 10.0,),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     Container(
@@ -79,17 +83,24 @@ class WeekNewsItemWidget extends StatelessWidget {
                         color: AppColors.primaryColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       child: Text(
-                        "${post["_embedded"]["wp:term"][0][0]["name"] ?? ""}".toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold, fontSize: 11, letterSpacing: 1.1),
+                        "${post["_embedded"]["wp:term"]?[0]?[0]?["name"] ?? "News"}".toUpperCase(),
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 8,
+                          letterSpacing: 0.8,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 10.0),
-                    Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(post['date'])) ?? "", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
-                    SizedBox(width: 10.0),
-
+                    const SizedBox(width: 8),
+                    Icon(Icons.access_time, size: 12, color: context.iconColor.withOpacity(0.5)),
+                    const SizedBox(width: 4),
+                    Text(
+                      DateFormat('dd MMM').format(DateTime.parse(post['date'])),
+                      style: secondaryTextStyle(size: 11),
+                    ),
                   ],
                 ),
               ],
